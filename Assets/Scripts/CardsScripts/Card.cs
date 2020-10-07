@@ -6,9 +6,14 @@ public enum CardType { other, yellow, red, blue, green };
 
 public abstract class Card : MonoBehaviour
 {
-
+    public Sprite cardSprite;
     // very, very, very, very, very simple card data stats
     public CardType type;
+
+    private void Start()
+    {
+        cardSprite = GetComponent<Sprite>();
+    }
 
     public virtual void DrawCard()
     {
