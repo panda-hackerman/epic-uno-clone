@@ -5,13 +5,21 @@ using Mirror;
 
 public class PlayerManager : NetworkBehaviour
 {
-    //TODO: Replace with a list of Card objects
-    public List<GameObject> cards = new List<GameObject>();
+    //TODO: List of possible card prefabs
+    public GameObject testCardPrefab;
+
+    //The player's hand of cards
+    public List<Card> myHand = new List<Card>();
 
     public override void OnStartClient()
     {
         base.OnStartClient();
         //Server and client will do this (server acts as client)
+
+        if (hasAuthority)
+        {
+            CmdDealCards();
+        }
     }
 
     [Server]
@@ -24,6 +32,11 @@ public class PlayerManager : NetworkBehaviour
     [Command]
     public void CmdDealCards()
     {
-
+        for (int i = 0; i <= 7; i++)
+        {
+            GameObject card = Instantiate(testCardPrefab);
+            //NetworkServer.Spawn(card, connectionToClient);
+            myHand.Add(card.GetComponent<Card>());
+        }
     }
 }

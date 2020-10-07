@@ -172,7 +172,7 @@ TextureImporter:
     second: UnoCard_Green_Numbered_5
   - first:
       213: 8016601604260445509
-    second: UnUnoCard_Green_Numbered_6
+    second: UnoCard_Green_Numbered_6
   - first:
       213: -1312234409214089406
     second: UnoCard_Green_Numbered_7
@@ -4349,7 +4349,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UnUnoCard_Green_Numbered_6
+      name: UnoCard_Green_Numbered_6
       rect:
         serializedVersion: 2
         x: 1344
