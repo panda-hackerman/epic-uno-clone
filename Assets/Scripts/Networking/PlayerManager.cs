@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using AdvacedMathStuff;
 
 public class PlayerManager : NetworkBehaviour
 {
@@ -11,18 +12,32 @@ public class PlayerManager : NetworkBehaviour
 
     //The player's hand of cards
     public List<Card> myHand = new List<Card>();
-    public List<Transform> cardPositions = new List<Transform>();
 
+    [Header("Position Settings")]
     public float cardGap = 1.0f;
+
+    private void Start()
+    {
+        
+    }
 
     public override void OnStartClient()
     {
         base.OnStartClient();
         //Server and client will do this (server acts as client)
 
-        if (hasAuthority)
+        if (isLocalPlayer)
         {
-            CmdDealCards();
+            Transform cam = Camera.main.gameObject.transform;
+            cam.parent = transform;
+            cam.eulerAngles = cam.eulerAngles.Y(transform.eulerAngles.y);
+            cam.position = transform.position;
+            cam.localPosition += new Vector3(0f, 2.5f, -2.6f);
+
+            if (hasAuthority)
+                CmdDealCards();
+            else
+                Debug.LogError("No Authority to call CmdDealCards");
         }
     }
 
@@ -38,37 +53,50 @@ public class PlayerManager : NetworkBehaviour
     {
         for (int i = 0; i < 7; i++)
         {
-            GameObject card = Instantiate(testCardPrefab, playerHand);
-            //NetworkServer.Spawn(card, connectionToClient);
+            GameObject card = Instantiate(testCardPrefab, transform);
+            NetworkServer.Spawn(card, connectionToClient);
             myHand.Add(card.GetComponent<Card>());
-            cardPositions.Add(card.transform);
-
         }
 
         UpdateCardPlacement();
     }
 
-    private void UpdateCardPlacement()
+    public void UpdateCardPlacement()
     {
-        for(int i = 0; i < myHand.Count; i++)
+        for (int i = 0; i < myHand.Count; i++)
         {
-            myHand[i].GetComponent<SpriteRenderer>().sortingOrder = i;
-            myHand[i].transform.position = playerHand.position;
-            myHand[i].transform.position += new Vector3((i - (myHand.Count - 1) / 2) * cardGap, 0, 0);
-            myHand[i].transform.eulerAngles = new Vector3(45, 0, -6);
+            Card card = myHand[i];
 
-            myHand[i].transform.parent = playerHand;
+            //Make sure cards aren't rendering inside eachother
+            card.GetComponent<SpriteRenderer>().sortingOrder = i;
 
-            float totalArc = 20f;
-            float rotationPerCard = totalArc / myHand.Count;
-            float startRotation = -1f * (totalArc / 2f);
+            //Set position and intital rotation
+            card.transform.parent = playerHand;
+            card.transform.position = playerHand.position;
+            card.transform.localPosition += new Vector3((i - (myHand.Count - 1) / 2) * cardGap, 0, 0);
+            card.transform.localEulerAngles = new Vector3(15, 0, 0);
 
-            float thisCardArc = startRotation + (i * rotationPerCard);
-            myHand[i].transform.eulerAngles = new Vector3(45, 0f, -thisCardArc);
+            if (myHand.Count > 1)
+            {
+                //Rotate the cards
+                float totalArc = 20.0f;
+                float rotationPerCard = totalArc / (myHand.Count - 1);
+                float startRotation = -1f * (totalArc / 2f);
 
-            float nudgeThisCard = Mathf.Abs(thisCardArc);
-            nudgeThisCard *= 0.01f;
-            myHand[i].transform.Translate(0f, -nudgeThisCard, 0f);
+                float thisCardArc = startRotation + (i * rotationPerCard);
+                card.transform.localEulerAngles += new Vector3(0f, 0f, -thisCardArc);
+
+                //Nudge the cards down to match their rotation
+                float nudgeThisCard = Mathf.Abs(thisCardArc);
+                nudgeThisCard *= 0.01f;
+                card.transform.Translate(0f, -nudgeThisCard, 0f);
+            }
+
+            //Set the resting and selected positon for later
+            card.restingPos = card.transform.position;
+            card.transform.localPosition += new Vector3(0, 0.3f, 0);
+            card.selectedPos = card.transform.position;
+            card.transform.position = card.restingPos;
         }
     }
 }

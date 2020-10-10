@@ -1,0 +1,50 @@
+{
+    "name": "UnoInputActions",
+    "maps": [
+        {
+            "name": "ActionMap",
+            "id": "3ce69eb8-5a4a-4dbf-a09e-1efec2c0cdb7",
+            "actions": [
+                {
+                    "name": "Select",
+                    "type": "Button",
+                    "id": "2f833a8c-6d55-4613-acff-1c3501eabbba",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "7a2d9405-1c58-4beb-8bb2-9129c76dd566",
+                    "path": "<Mouse>/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "Select",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "Keyboard and Mouse",
+            "bindingGroup": "Keyboard and Mouse",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Mouse>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}
