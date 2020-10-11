@@ -114,9 +114,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f27af8be5dc41b145b727520bc0cc314, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  prefab: {fileID: 7190237164333156556}
+  cardSprite: {fileID: 0}
   restingPos: {x: 0, y: 0, z: 0}
   selectedPos: {x: 0, y: 0, z: 0}
-  cardSprite: {fileID: 0}
   type: 3
   cardValue: 0
 --- !u!65 &7796934962493311859

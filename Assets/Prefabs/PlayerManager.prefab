@@ -115,7 +115,6 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   testCardPrefab: {fileID: 7190237164333156556, guid: 61d1a263dbde86142a8753e6d13e356d, type: 3}
-  playerHand: {fileID: 2837409704438142239}
   myHand: []
   cardGap: 0.4
 --- !u!114 &5703238891101118184
@@ -162,6 +161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  testCardPrefab: {fileID: 7190237164333156556, guid: 61d1a263dbde86142a8753e6d13e356d, type: 3}
   layerMask:
     serializedVersion: 2
     m_Bits: 256

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6123137358902548776}
   - component: {fileID: 8977441969801483883}
   - component: {fileID: 4962402600012541189}
-  - component: {fileID: 453223885263183589}
   - component: {fileID: -6144266954406246360}
   - component: {fileID: -787597406466340252}
   m_Layer: 8
@@ -102,23 +101,6 @@ MonoBehaviour:
   serverOnly: 0
   m_AssetId: 
   hasSpawned: 0
---- !u!114 &453223885263183589
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 500137167884633502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f262deb71a5df734ea20b85a789930bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  restingPos: {x: 0, y: 0, z: 0}
-  selectedPos: {x: 0, y: 0, z: 0}
-  cardSprite: {fileID: 0}
-  type: 0
-  cardEffect: 4
 --- !u!65 &-6144266954406246360
 BoxCollider:
   m_ObjectHideFlags: 0

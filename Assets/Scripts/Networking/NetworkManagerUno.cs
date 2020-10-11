@@ -11,8 +11,8 @@ public class NetworkManagerUno : NetworkManager
 
     public override void OnServerAddPlayer(NetworkConnection conn)
     {
-        Transform start;
-        switch (NetworkServer.connections.Count)
+        Transform start = p1spawn;
+/*        switch (NetworkServer.connections.Count)
         {
             case 1:
                 start = p1spawn;
@@ -31,9 +31,11 @@ public class NetworkManagerUno : NetworkManager
                 conn.Disconnect();
                 return;
         }
-
+*/
         GameObject player = Instantiate(playerPrefab, start.position, start.rotation);
         NetworkServer.AddPlayerForConnection(conn, player);
+
+        Debug.Log("Added player. Total number of players: " + NetworkServer.connections.Count);
     }
 
     public override void OnServerDisconnect(NetworkConnection conn)
