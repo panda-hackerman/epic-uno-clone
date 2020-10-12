@@ -860,7 +860,7 @@ GameObject:
   - component: {fileID: 255393138}
   - component: {fileID: 255393137}
   m_Layer: 0
-  m_Name: NetworkManeger
+  m_Name: NetworkManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -902,7 +902,7 @@ MonoBehaviour:
   OnServerDisconnected:
     m_PersistentCalls:
       m_Calls: []
-  port: 7777
+  port: 25565
   NoDelay: 1
   serverMaxMessageSize: 16384
   serverMaxReceivesPerTick: 10000
