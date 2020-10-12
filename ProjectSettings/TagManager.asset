@@ -41,3 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: DiscardPile
+    uniqueID: 212448887
+    locked: 0
+  - name: Hand
+    uniqueID: 2530296865
+    locked: 0

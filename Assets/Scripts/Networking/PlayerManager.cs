@@ -6,14 +6,12 @@ using AdvacedMathStuff;
 
 public class PlayerManager : NetworkBehaviour
 {
-    //TODO: List of possible card prefabs
-    public GameObject testCardPrefab;
+    public float cardGap = 1.0f;
 
     //The player's hand of cards
     public List<Card> myHand = new List<Card>();
 
-    [Header("Position Settings")]
-    public float cardGap = 1.0f;
+    [HideInInspector] public List<GameObject> cardPrefabs; //Always at the bottom
 
     public override void OnStartLocalPlayer()
     {
@@ -30,10 +28,17 @@ public class PlayerManager : NetworkBehaviour
     {
         for (int i = 0; i < 7; i++)
         {
-            GameObject cardObj = Instantiate(testCardPrefab, transform);
-            myHand.Add(cardObj.GetComponent<Card>());
+            //TODO: Instead of using Random.Range, have certain cards more likely to be picked than others
 
-            UpdateCardPlacement();
+            //Make the card
+            GameObject prefab = cardPrefabs[Random.Range(0, cardPrefabs.Count - 1)];
+            GameObject cardObj = Instantiate(prefab, transform);
+            Card card = cardObj.GetComponent<Card>();
+
+            card.ID = cardPrefabs.IndexOf(prefab); //Card ID needed for when it's added to the deck later
+            myHand.Add(card); //Add to list of cards currently in my hand
+
+            UpdateCardPlacement(); //Position the cards correctly on my screen
         }
     }
 

@@ -7,17 +7,14 @@ public enum CardType { other, yellow, red, blue, green };
 
 public abstract class Card : NetworkBehaviour
 {
-    public GameObject prefab;
-
-    public Sprite cardSprite;
-    public Vector3 restingPos, selectedPos;
+    public int ID = -1;
     public CardType type;
+    [HideInInspector] public Vector3 restingPos, selectedPos;
     public bool IsSelected { set { transform.position = value ? selectedPos : restingPos; } }
 
-    private void Start()
-    {
-        //cardSprite = GetComponent<Sprite>();
-    }
+    public virtual void Start() { }
+
+    public virtual void Update() { }
 
     public virtual void DrawCard()
     {

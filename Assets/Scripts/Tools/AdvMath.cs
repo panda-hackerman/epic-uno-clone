@@ -6,11 +6,9 @@ namespace AdvacedMathStuff
 {
     public static class AdvMath
     {
-
         //Clamps rotation using Euler angles
         public static float ClampEuler(this float value, float min, float max, float middle = 180)
         {
-
             if (value < middle)
             {
                 if (value > max)
@@ -29,7 +27,10 @@ namespace AdvacedMathStuff
             }
         }
 
+        #region Roulette
         //Random with weighted probability, using an Array of doubles
+        /*Usage: int prefabNum = Roulette(weights)
+                 Instatiate(prefabList[prefabNum])*/
         public static int Roulette(double[] weights)
         {
             double totalWeight = 0;
@@ -52,7 +53,7 @@ namespace AdvacedMathStuff
             return weights.Length - 1;
         }
 
-        //Using a list
+        //Same thing using a list of weights
         public static int Roulette(List<double> weights)
         {
             double totalWeight = 0;
@@ -74,6 +75,25 @@ namespace AdvacedMathStuff
 
             return weights.Count - 1;
         }
+        #endregion
+
+        #region Give or take
+        //Add or take a little from a variable
+        /*Usage: float someVariable = 20.GiveOrTake(3);
+         returns a float from 17 to 23*/
+
+        public static float GiveOrTake(this float f, float n)
+        {
+            f += Random.Range(-n, n);
+            return f;
+        }
+
+        public static int GiveOrTake(this int i, int n)
+        {
+            i += Random.Range(-n, n);
+            return i;
+        }
+        #endregion
 
         #region Vector math
         //Change a single variable in a Vector3
