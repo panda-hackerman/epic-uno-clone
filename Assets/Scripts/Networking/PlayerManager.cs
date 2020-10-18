@@ -11,7 +11,7 @@ public class PlayerManager : NetworkBehaviour
     //The player's hand of cards
     public List<Card> myHand = new List<Card>();
 
-    [HideInInspector] public List<GameObject> cardPrefabs; //Always at the bottom
+    public ServerGameManager sgm;
 
     public override void OnStartLocalPlayer()
     {
@@ -21,25 +21,42 @@ public class PlayerManager : NetworkBehaviour
         cam.eulerAngles = cam.eulerAngles.Y(transform.eulerAngles.y);
         cam.localPosition += new Vector3(0f, 2.5f, -2.6f);
 
-        DealCards();
+        sgm = FindObjectOfType<ServerGameManager>();
+        if (!sgm) Debug.LogWarning("Couldn't find the server game manager");
+
+        if (isLocalPlayer && hasAuthority)
+            DealCards();
     }
 
-    private void DealCards()
+    public void DealCards()
     {
         for (int i = 0; i < 7; i++)
         {
-            //TODO: Instead of using Random.Range, have certain cards more likely to be picked than others
-
             //Make the card
-            GameObject prefab = cardPrefabs[Random.Range(0, cardPrefabs.Count - 1)];
+            List<double> cardWeights = new List<double>();
+            foreach(CardPrefab cardPrefab in sgm.drawPile)
+            {
+                cardWeights.Add(cardPrefab.numberInDeck);
+            }
+
+            int number = AdvMath.Roulette(cardWeights); //Cards with a higher count are more likely to be picked
+            GameObject prefab = sgm.drawPile[number].prefab;
+            Debug.Log("The prefab at number " + number + " is called: " + prefab.name);
             GameObject cardObj = Instantiate(prefab, transform);
             Card card = cardObj.GetComponent<Card>();
 
-            card.ID = cardPrefabs.IndexOf(prefab); //Card ID needed for when it's added to the deck later
+            CmdRemoveCardFromDrawPile(number, sgm.GetComponent<NetworkIdentity>()); //Take one of this card out of the draw pile
+            card.ID = number;
             myHand.Add(card); //Add to list of cards currently in my hand
 
             UpdateCardPlacement(); //Position the cards correctly on my screen
         }
+    }
+
+    [Command]
+    void CmdRemoveCardFromDrawPile(int number, NetworkIdentity servGM)
+    {
+        servGM.GetComponent<ServerGameManager>().drawPile[number].numberInDeck--;
     }
 
     public void UpdateCardPlacement()

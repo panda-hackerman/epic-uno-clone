@@ -53,7 +53,7 @@ namespace AdvacedMathStuff
             return weights.Length - 1;
         }
 
-        //Same thing using a list of weights
+        //Same thing but with a list instead of an array
         public static int Roulette(List<double> weights)
         {
             double totalWeight = 0;

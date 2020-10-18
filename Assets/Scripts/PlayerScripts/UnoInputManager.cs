@@ -23,7 +23,6 @@ public class UnoInputManager : NetworkBehaviour
 
         sgm = FindObjectOfType<ServerGameManager>();
         if (!sgm) Debug.LogWarning("Couldn't find the server game manager");
-
     }
 
     private void Update()
@@ -45,8 +44,9 @@ public class UnoInputManager : NetworkBehaviour
     [Command]
     public void CmdAddCardToDiscard(int id)
     {
-        GameObject newCard = Instantiate(playerManager.cardPrefabs[id]);
+        GameObject newCard = Instantiate(sgm.drawPile[id].prefab);
         Destroy(newCard.GetComponent<Collider>());
+        newCard.GetComponent<Card>().ID = id;
 
         NetworkServer.Spawn(newCard);
 

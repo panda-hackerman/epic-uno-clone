@@ -1,4 +1,4 @@
-﻿using UnityEditor;
+﻿/*using UnityEditor;
 using UnityEngine;
 
 namespace Mirror
@@ -26,3 +26,4 @@ namespace Mirror
         }
     }
 } //namespace
+*/
