@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 9053088953092894181}
   - component: {fileID: 5037471103301637771}
   - component: {fileID: 6719661564210788620}
-  - component: {fileID: -8360563900295061787}
   - component: {fileID: 1549772842}
+  - component: {fileID: 3338725265993023488}
   m_Layer: 8
   m_Name: Black_Draw4
   m_TagString: Untagged
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1764670431
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: -1359366347219086848, guid: 1afdb1fd7d00b9d479ab530e2956fa85, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -115,24 +115,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.68, y: 2.58, z: 0.013413824}
   m_Center: {x: 0, y: 0, z: 0.0003718771}
---- !u!114 &-8360563900295061787
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 560020315528625680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0
-  clientAuthority: 1
-  localPositionSensitivity: 0.01
-  localRotationSensitivity: 0.01
-  localScaleSensitivity: 0.01
 --- !u!114 &1549772842
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,3 +134,21 @@ MonoBehaviour:
   restingPos: {x: 0, y: 0, z: 0}
   selectedPos: {x: 0, y: 0, z: 0}
   cardsToDraw: 4
+--- !u!114 &3338725265993023488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560020315528625680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0
+  clientAuthority: 1
+  localPositionSensitivity: 0.01
+  localRotationSensitivity: 0.01
+  localScaleSensitivity: 0.01

@@ -8,77 +8,73 @@ public class PlayerManager : NetworkBehaviour
 {
     public float cardGap = 1.0f;
 
-    //The player's hand of cards
-    public List<Card> myHand = new List<Card>();
+    public List<GameObject> cardPrefabs = new List<GameObject>();
 
-    public ServerGameManager sgm;
+    //The player's hand of cards. The second list is a list of the local representations of the cards.
+    public SyncListInt myHand = new SyncListInt();
+    public List<Card> physicalCards = new List<Card>();
 
+    //Calls when the local player starts
     public override void OnStartLocalPlayer()
     {
-        Transform cam = Camera.main.gameObject.transform;
-        cam.SetParent(transform);
-        cam.position = transform.position;
-        cam.eulerAngles = cam.eulerAngles.Y(transform.eulerAngles.y);
-        cam.localPosition += new Vector3(0f, 2.5f, -2.6f);
-
-        sgm = FindObjectOfType<ServerGameManager>();
-        if (!sgm) Debug.LogWarning("Couldn't find the server game manager");
-
-        if (isLocalPlayer && hasAuthority)
-            DealCards();
+        Transform cam = Camera.main.gameObject.transform; //Get the main camera
+        cam.SetParent(transform); //It's mine now hehe
+        cam.position = transform.position; //Temporarily set the camera to my position to offset it later
+        cam.eulerAngles = cam.eulerAngles.Y(transform.eulerAngles.y); //Set the camera's Y rotation to mine
+        cam.localPosition += new Vector3(0f, 2.5f, -2.6f); //Add the offset
     }
 
-    public void DealCards()
+    [ClientRpc]
+    public void RpcAddCard(int id)
     {
-        for (int i = 0; i < 7; i++)
+        myHand.Add(id);
+    }
+
+    [ClientRpc]
+    public void RpcSpawnCards()
+    {
+        if (!isLocalPlayer) return;
+        //Destroy all the cards and reset the list so we can add them back with the correct cards 
+        //This is so the physical cards list is always accurate to the cards in the player's deck
+        /*foreach (Card card in physicalCards)
+            Destroy(card);
+
+        physicalCards = new List<Card>();*/
+
+        //Spawn the cards
+        Debug.Log(myHand.Count);
+        for (int i = 0; i < myHand.Count; i++)
         {
-            //Make the card
-            List<double> cardWeights = new List<double>();
-            foreach(CardPrefab cardPrefab in sgm.drawPile)
-            {
-                cardWeights.Add(cardPrefab.numberInDeck);
-            }
+            int ID = myHand[i];
+            GameObject cardPhysical = Instantiate(cardPrefabs[ID]);
+            cardPhysical.transform.parent = transform;
+            physicalCards.Add(cardPhysical.GetComponent<Card>());
 
-            int number = AdvMath.Roulette(cardWeights); //Cards with a higher count are more likely to be picked
-            GameObject prefab = sgm.drawPile[number].prefab;
-            Debug.Log("The prefab at number " + number + " is called: " + prefab.name);
-            GameObject cardObj = Instantiate(prefab, transform);
-            Card card = cardObj.GetComponent<Card>();
-
-            CmdRemoveCardFromDrawPile(number, sgm.GetComponent<NetworkIdentity>()); //Take one of this card out of the draw pile
-            card.ID = number;
-            myHand.Add(card); //Add to list of cards currently in my hand
-
-            UpdateCardPlacement(); //Position the cards correctly on my screen
+            Debug.Log("Spawned Card");
         }
-    }
 
-    [Command]
-    void CmdRemoveCardFromDrawPile(int number, NetworkIdentity servGM)
-    {
-        servGM.GetComponent<ServerGameManager>().drawPile[number].numberInDeck--;
+        UpdateCardPlacement();
     }
 
     public void UpdateCardPlacement()
     {
-        for (int i = 0; i < myHand.Count; i++)
+        for (int i = 0; i < physicalCards.Count; i++)
         {
-            Card card = myHand[i];
-            card.name = card.type.ToString() + " uno card";
+            Card card = physicalCards[i];
 
             //Make sure cards aren't rendering inside eachother
             card.GetComponent<SpriteRenderer>().sortingOrder = i;
 
             //Set position and intital rotation
             card.transform.position = transform.position;
-            card.transform.localPosition += new Vector3((i - (myHand.Count - 1) / 2) * cardGap, 0, 0);
+            card.transform.localPosition += new Vector3((i - (physicalCards.Count - 1) / 2) * cardGap, 0, 0);
             card.transform.localEulerAngles = new Vector3(15, 0, 0);
 
-            if (myHand.Count > 1)
+            if (physicalCards.Count > 1)
             {
                 //Rotate the cards in an arc
                 float totalArc = 20.0f;
-                float rotationPerCard = totalArc / (myHand.Count - 1);
+                float rotationPerCard = totalArc / (physicalCards.Count - 1);
                 float startRotation = -1f * (totalArc / 2f);
 
                 float thisCardArc = startRotation + (i * rotationPerCard);

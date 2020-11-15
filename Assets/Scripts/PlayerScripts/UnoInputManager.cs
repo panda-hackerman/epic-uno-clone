@@ -34,7 +34,7 @@ public class UnoInputManager : NetworkBehaviour
             selectedCard = hit.collider.GetComponent<Card>();
         }
 
-        foreach (Card card in playerManager.myHand)
+        foreach (Card card in playerManager.physicalCards)
         {
             if (card)
                 card.IsSelected = card == selectedCard;
@@ -59,7 +59,7 @@ public class UnoInputManager : NetworkBehaviour
     public void OnSelect()
     {
         if (!selectedCard || !hasAuthority) return;
-        if (!playerManager.myHand.Contains(selectedCard))
+        if (!playerManager.physicalCards.Contains(selectedCard))
         {
             Debug.LogWarning("Player attempting to select card not in their hand");
             return;
@@ -68,7 +68,7 @@ public class UnoInputManager : NetworkBehaviour
         selectedCard.PlayCard(); //You've been played! B)
 
         //Get out of my hand and into the discard pile
-        playerManager.myHand.Remove(selectedCard);
+        playerManager.physicalCards.Remove(selectedCard);
         CmdAddCardToDiscard(selectedCard.ID);
 
         Destroy(selectedCard.gameObject); //Death

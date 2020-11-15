@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4751213085156992626}
   - component: {fileID: 8978189994449212735}
   - component: {fileID: -7371505612317438127}
-  - component: {fileID: 6146288259740930620}
+  - component: {fileID: -552922654975383980}
   m_Layer: 8
   m_Name: Green_0
   m_TagString: Untagged
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1764670431
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: -5983767600545851553, guid: 1afdb1fd7d00b9d479ab530e2956fa85, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -100,7 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  ID: 0
+  ID: 3
   type: 4
   restingPos: {x: 0, y: 0, z: 0}
   selectedPos: {x: 0, y: 0, z: 0}
@@ -134,7 +134,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.68, y: 2.58, z: 0.013413824}
   m_Center: {x: 0, y: 0, z: 0.0003718771}
---- !u!114 &6146288259740930620
+--- !u!114 &-552922654975383980
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
