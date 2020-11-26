@@ -3,18 +3,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using AdvacedMathStuff;
-using System;
 
 public class ServerGameManager : NetworkBehaviour
 {
+    public List<PlayerManager> players = new List<PlayerManager>();
+    public Dictionary<NetworkConnection, PlayerManager> playerConnections = new Dictionary<NetworkConnection, PlayerManager>();
+
+    public int playerCount { get { return players.Count; } }
+
+    #region TURNS
+
+    [SyncVar]
+    public int currentPlayer;
+    public bool isReversed;
+
+/*    public void NextTurn()
+    {
+        currentPlayer += isReversed ? -1 : 1; //Add or subtract depending on if the game is reversed
+
+        Debug.Log("There are " + playerCount + " players");
+
+        if (currentPlayer > playerCount - 1)
+        {
+            currentPlayer -= playerCount;
+        }
+
+        if (currentPlayer < 0)
+        {
+            currentPlayer += playerCount;
+        }
+    }*/
+
+    #endregion
+
     #region DISCARD_PILE
-    public int maxDiscardCards = 10;
+
+    public int maxDiscardCards = 10; //Most cards in the discard pile at one time
 
     [SyncVar]
     public List<GameObject> discardPile;
 
     public void UpdateDiscardPile()
     {
+        //Remove the oldest card if the total is more than the max
         if (discardPile.Count > maxDiscardCards)
         {
             GameObject oldestCard = discardPile[0];
@@ -25,6 +56,7 @@ public class ServerGameManager : NetworkBehaviour
 
         for (int i = 0; i < discardPile.Count; i++)
         {
+            //Make sure everything is rendering in the correct order
             RpcSetSortingOrder(discardPile[i].GetComponent<NetworkIdentity>(), i);
         }
     }
@@ -51,7 +83,6 @@ public class ServerGameManager : NetworkBehaviour
             DealCard(playerManager);
         }
 
-        Debug.Log("Finished Dealing Cards");
         playerManager.RpcSpawnCards();
     }
 
@@ -61,12 +92,10 @@ public class ServerGameManager : NetworkBehaviour
         foreach(CardPrefab cardPrefab in drawPile) 
         {
             //For every card currently in the deck, add the number of them that exist in the deck
-            //The more of the same card in the deck the more likely it is to get picked.
             cardWeights.Add(cardPrefab.numberInDeck);
         }
 
         //Pick an index from the list based on the probability we detailed above
-        //The lists of double and the cardPrefab list are the same length, so each index in each correspond to an item in the other
         int pickedCardIndex = AdvMath.Roulette(cardWeights);
 
         //Add the card to the player's hand and set some variables

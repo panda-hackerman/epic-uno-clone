@@ -131,6 +131,7 @@ MonoBehaviour:
   syncInterval: 0.1
   ID: 0
   type: 0
+  wildCard: 1
   restingPos: {x: 0, y: 0, z: 0}
   selectedPos: {x: 0, y: 0, z: 0}
   cardsToDraw: 4

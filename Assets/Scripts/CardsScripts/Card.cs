@@ -9,6 +9,7 @@ public abstract class Card : NetworkBehaviour
 {
     public int ID = -1;
     public CardType type;
+    public bool wildCard = false;
     [HideInInspector] public Vector3 restingPos, selectedPos;
     public bool IsSelected { set { transform.position = value ? selectedPos : restingPos; } }
 
@@ -18,13 +19,11 @@ public abstract class Card : NetworkBehaviour
 
     public virtual void DrawCard()
     {
-        // You should override this function
-        // Called when this card is drawn from the pile (or dealt at the beginning of the game)
+        // Called when this card is drawn or dealt
     }
 
     public virtual void PlayCard()
     {
-        // You should override this function
         // Called when this card is discarded
     }
 }

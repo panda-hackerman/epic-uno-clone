@@ -8,7 +8,7 @@ using System;
 public class NetworkManagerUno : NetworkManager
 {
     public Transform playerSpawn;
-    public ServerGameManager servGM;
+    public ServerGameManager gameManager;
 
     //When player joins
     public override void OnServerAddPlayer(NetworkConnection conn)
@@ -19,16 +19,33 @@ public class NetworkManagerUno : NetworkManager
 
         PlayerManager playerManager = player.GetComponent<PlayerManager>();
 
-        Debug.Assert(playerManager != null, "Uh oh, someone did an oopsie. There is no player manager on the player object!"); //Just in case
+        gameManager.players.Add(playerManager);
+        gameManager.playerConnections.Add(conn, playerManager);
 
         //Now the server manager will deal the cards for the specified player.
-        servGM.DealCards(playerManager);
+        gameManager.DealCards(playerManager);
+
+        for (int i = 0; i < gameManager.playerCount; i++)
+        {
+            gameManager.players[i].playerNumber = i;
+        }
     }
 
     //This happens when a client disconnects from the server
     public override void OnServerDisconnect(NetworkConnection conn)
     {
-        //TODO: Add disconnected player's cards back into the draw pile
-        base.OnServerDisconnect(conn);
+        PlayerManager playerManager = gameManager.playerConnections[conn];
+
+        gameManager.players.Remove(playerManager);
+        gameManager.playerConnections.Remove(conn);
+
+        for (int i = 0; i < gameManager.playerCount; i++)
+        {
+            gameManager.players[i].playerNumber = i;
+        }
+
+        NetworkServer.DestroyPlayerForConnection(conn);
+
+        Debug.Log("Disconnected Player");
     }
 }

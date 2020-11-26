@@ -6,12 +6,15 @@ using AdvacedMathStuff;
 
 public class PlayerManager : NetworkBehaviour
 {
+    [SyncVar]
+    public int playerNumber;
+
     public float cardGap = 1.0f;
 
     public List<GameObject> cardPrefabs = new List<GameObject>();
 
     //The player's hand of cards. The second list is a list of the local representations of the cards.
-    public SyncListInt myHand = new SyncListInt();
+    public List<int> myHand = new List<int>();
     public List<Card> physicalCards = new List<Card>();
 
     //Calls when the local player starts
@@ -22,6 +25,8 @@ public class PlayerManager : NetworkBehaviour
         cam.position = transform.position; //Temporarily set the camera to my position to offset it later
         cam.eulerAngles = cam.eulerAngles.Y(transform.eulerAngles.y); //Set the camera's Y rotation to mine
         cam.localPosition += new Vector3(0f, 2.5f, -2.6f); //Add the offset
+
+        gameObject.name += " (Local Player)";
     }
 
     [ClientRpc]
@@ -34,23 +39,21 @@ public class PlayerManager : NetworkBehaviour
     public void RpcSpawnCards()
     {
         if (!isLocalPlayer) return;
+
         //Destroy all the cards and reset the list so we can add them back with the correct cards 
         //This is so the physical cards list is always accurate to the cards in the player's deck
-        /*foreach (Card card in physicalCards)
+        foreach (Card card in physicalCards)
             Destroy(card);
 
-        physicalCards = new List<Card>();*/
+        physicalCards = new List<Card>();
 
         //Spawn the cards
-        Debug.Log(myHand.Count);
         for (int i = 0; i < myHand.Count; i++)
         {
             int ID = myHand[i];
             GameObject cardPhysical = Instantiate(cardPrefabs[ID]);
             cardPhysical.transform.parent = transform;
             physicalCards.Add(cardPhysical.GetComponent<Card>());
-
-            Debug.Log("Spawned Card");
         }
 
         UpdateCardPlacement();
