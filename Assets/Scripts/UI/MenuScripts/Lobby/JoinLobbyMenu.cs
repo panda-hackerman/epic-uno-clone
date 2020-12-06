@@ -4,7 +4,7 @@ using TMPro;
 
 public class JoinLobbyMenu : MonoBehaviour
 {
-    [SerializeField] private NetworkLobbyManeger _lobbyManeger = null;
+    [SerializeField] private NetworkManegerLobby _lobbyManeger = null;
 
     [Header("UI")]
     [SerializeField] private GameObject _landingPagePanel = null;
@@ -13,14 +13,14 @@ public class JoinLobbyMenu : MonoBehaviour
 
     private void OnEnable()
     {
-        NetworkLobbyManeger.OnClientConnected += HandleClientConnected;
-        NetworkLobbyManeger.OnClientDisconnected += HandleClientDisconnected;
+        NetworkManegerLobby.OnClientConnected += HandleClientConnected;
+        NetworkManegerLobby.OnClientDisconnected += HandleClientDisconnected;
     }
 
     private void OnDisable()
     {
-        NetworkLobbyManeger.OnClientConnected -= HandleClientConnected;
-        NetworkLobbyManeger.OnClientDisconnected -= HandleClientDisconnected;
+        NetworkManegerLobby.OnClientConnected -= HandleClientConnected;
+        NetworkManegerLobby.OnClientDisconnected -= HandleClientDisconnected;
     }
 
     // Called from UI button

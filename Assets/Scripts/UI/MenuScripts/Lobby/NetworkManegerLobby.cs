@@ -1,19 +1,22 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 using System;
 using System.Linq;
 using Mirror;
 
-public class NetworkLobbyManeger : NetworkManager
+public class NetworkManegerLobby : NetworkManager
 {
+    [SerializeField] private int minPlayers = 2;
     // Drag in a scene and it's name will be turned into a string
-    [Scene] [SerializeField] private string _menuScene = string.Empty;
+    [Scene] [SerializeField] private string menuScene = string.Empty;
 
-    [Header("Room")]
-    [SerializeField] private NetworkLobbyPlayer _lobbyPlayerPrefab = null;
-
+    [Header("Lobby")]
+    [SerializeField] private NetworkPlayerLobby lobbyPlayerPrefab = null;
     public static event Action OnClientConnected;
     public static event Action OnClientDisconnected;
+
+    public List<NetworkPlayerLobby> PlayersInLobby { get; } = new List<NetworkPlayerLobby>();
 
     // >>> MAKE SURE THERES A FOLDER UNDER THIS NAME <<<
     public override void OnStartServer() => spawnPrefabs = Resources.LoadAll<GameObject>("SpawnablePrefabs").ToList();
@@ -51,7 +54,7 @@ public class NetworkLobbyManeger : NetworkManager
             return;
         }
         // Disconnects players if not in the right scene
-        if(SceneManager.GetActiveScene().name != _menuScene){
+        if(SceneManager.GetActiveScene().name != menuScene){
             conn.Disconnect();
             return;
         }
@@ -60,12 +63,61 @@ public class NetworkLobbyManeger : NetworkManager
     public override void OnServerAddPlayer(NetworkConnection conn)
     {
         // Checks if the player is in the right scene
-        if(SceneManager.GetActiveScene().name == _menuScene)
+        if(SceneManager.GetActiveScene().name == menuScene)
         {
+            bool isHost = PlayersInLobby.Count == 0;
+
             // Instantiates a lobby player
-            NetworkLobbyPlayer lobbyPlayerInstance = Instantiate(_lobbyPlayerPrefab);
+            NetworkPlayerLobby lobbyPlayerInstance = Instantiate(lobbyPlayerPrefab);
+
+            //lobbyPlayerInstance.IsTheHost = isHost;
+
             // Assigns connection to the lobby player
             NetworkServer.AddPlayerForConnection(conn, lobbyPlayerInstance.gameObject);
         }
+    }
+
+    public override void OnServerDisconnect(NetworkConnection conn)
+    {
+        if(conn.identity != null)
+        {
+            var player = conn.identity.GetComponent<NetworkPlayerLobby>();
+
+            PlayersInLobby.Remove(player);
+
+            NotifyPlayersOfReadyState();
+        }
+
+        base.OnServerDisconnect(conn);
+    }
+
+    public override void OnStopServer() => PlayersInLobby.Clear();
+
+    public void UpdatePlayersOfReadyState()
+    {
+        foreach(var player in PlayersInLobby)
+        {
+            player.HandleReadyToStart(IsReadyToStart());
+        }
+    }
+
+    public void NotifyPlayersOfReadyState()
+    {
+        foreach(var player in PlayersInLobby)
+        {
+            player.HandleReadyToStart(IsReadyToStart());
+        }
+    }
+
+    private bool IsReadyToStart()
+    {
+        if(numPlayers < minPlayers) { return false; }
+
+        foreach (var player in PlayersInLobby)
+        {
+            if(!player.IsReady) { return false;  }
+        }
+
+        return true;
     }
 }
