@@ -5,6 +5,8 @@ using Mirror;
 
 public class WildCard : Card
 {
+    public Sprite yellowSprite, redSprite, blueSprite, greenSprite;
+
     public override void DrawCard()
     {
         base.DrawCard();
@@ -13,11 +15,9 @@ public class WildCard : Card
     public override void PlayCard()
     {
         base.PlayCard();
-    }
 
-    [Command]
-    private void CmdChangeColor()
-    {
-        //TODO: Tell server to change the color
+        myPlayer.chooseColorButtons.SetActive(true);
+
+        Debug.Log("Choosing Color...");
     }
 }

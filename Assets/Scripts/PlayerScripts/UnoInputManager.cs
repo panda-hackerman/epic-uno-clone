@@ -13,7 +13,10 @@ public class UnoInputManager : NetworkBehaviour
     Camera cam;
     Card selectedCard;
 
-    public LayerMask layerMask;
+    bool selectedDrawPile;
+
+    public LayerMask cardLayer;
+    public LayerMask drawPileLayer;
 
     private void Start()
     {
@@ -30,16 +33,18 @@ public class UnoInputManager : NetworkBehaviour
     {
         selectedCard = null;
 
-        if (Physics.Raycast(cam.ScreenPointToRay(Mouse.current.position.ReadValue()), out RaycastHit hit, 50, layerMask))
+        if (Physics.Raycast(cam.ScreenPointToRay(Mouse.current.position.ReadValue()), out RaycastHit hit, 50, cardLayer))
         {
             selectedCard = hit.collider.GetComponent<Card>();
         }
 
         foreach (Card card in playerManager.physicalCards)
         {
-            if (card)
-                card.IsSelected = card == selectedCard;
+            if (card) card.IsSelected = card == selectedCard;
         }
+
+        //True if hovering over the discard pile
+        selectedDrawPile = Physics.Raycast(cam.ScreenPointToRay(Mouse.current.position.ReadValue()), out RaycastHit hit2, 50, drawPileLayer);
     }
 
     [Command]
@@ -59,20 +64,30 @@ public class UnoInputManager : NetworkBehaviour
 
     public void OnSelect()
     {
+        if (!hasAuthority) return;
+
+        //Check if it is my turn
         if (playerManager.playerNumber != gameManager.currentPlayer)
         {
             Debug.Log("Player Number = " + playerManager.playerNumber + ", Current Player = " + gameManager.currentPlayer);
             return;
         }
 
-        if (!selectedCard || !hasAuthority) return;
+        if (selectedCard)
+            DoPlayCard();
+        else if (selectedDrawPile)
+            CmdDoDrawCard(playerManager.gameObject);
+    }
+
+    private void DoPlayCard()
+    {
         if (!playerManager.physicalCards.Contains(selectedCard))
         {
             Debug.LogWarning("Player attempting to select card not in their hand");
             return;
         }
 
-        if (!selectedCard.wildCard)
+        if (!selectedCard.wildCard) //We can skip all this if you are playing a wild, as they can be played on anything
         {
             int type = (int)selectedCard.type;
             int cardNum = -1;
@@ -80,64 +95,65 @@ public class UnoInputManager : NetworkBehaviour
             NumberedCard numCard = selectedCard as NumberedCard;
             if (numCard) cardNum = numCard.cardValue;
 
-            CmdCanPlayCard(type, cardNum, selectedCard.GetType().ToString());
+            CmdCanPlayCard(gameObject, type, cardNum, selectedCard.GetType().ToString());
 
             if (!canPlay) return;
         }
 
         selectedCard.PlayCard(); //You've been played! B)
-        CmdNextTurn();
+        if (selectedCard.callNextTurn) CmdNextTurn();
 
         //Get out of my hand and into the discard pile
         playerManager.physicalCards.Remove(selectedCard);
         CmdAddCardToDiscard(selectedCard.ID);
 
         Destroy(selectedCard.gameObject); //Death
-        selectedCard = null; //Object deleted so set var to null
 
         playerManager.UpdateCardPlacement(); //Make sure the other cards are where they need to be
     }
 
-    bool canPlay;
+    [Command]
+    private void CmdDoDrawCard(GameObject _playerManager)
+    {
+        PlayerManager pManager = _playerManager.GetComponent<PlayerManager>();
+        gameManager.DealCard(pManager);
+        pManager.RpcSpawnCards();
+        Debug.Log("bababooey");
+    }
 
     //TODO: Have a card show up at the beginning of the game
-    [Command]
-    public void CmdCanPlayCard(int type, int cardNum, string classType)
-    {
-        canPlay = false;
 
-        if (!gameManager.discardPile.Any())
+    public bool canPlay;
+    [Command]
+    public void CmdCanPlayCard(GameObject player, int type, int cardNum, string classType)
+    {
+        UnoInputManager self = player.GetComponent<UnoInputManager>();
+
+        self.canPlay = false;
+
+        if (!gameManager.discardPile.Any()) //If there are no card in discard, should be fixed
         {
-            canPlay = true;
+            self.canPlay = true;
             return;
         }
 
         Card topCard = gameManager.discardPile[gameManager.discardPile.Count - 1].GetComponent<Card>();
+        NumberedCard topNumCard = topCard as NumberedCard;
 
-        if (!topCard)
+        if (topNumCard && cardNum != -1) //If this is a numbered card
         {
-            canPlay = true;
-            return;
-        }
-
-        if (type != 0 && (CardType)type == topCard.type) //If the card type is not other, and they are of the same type
-        {
-            canPlay = true;
+            if (cardNum == topNumCard.cardValue)
+                self.canPlay = true;
         }
         else
         {
-            NumberedCard topNumCard = topCard as NumberedCard;
+            if (topCard.GetType().ToString() == classType)
+                self.canPlay = true;
+        }
 
-            if (topNumCard && cardNum != -1) //If this is a numbered card
-            {
-                if (cardNum == topNumCard.cardValue)
-                    canPlay = true;
-            }
-            else
-            {
-                if (topCard.GetType().ToString() == classType)
-                    canPlay = true;
-            }
+        if (type != 0 && (CardType)type == topCard.type) //If the cards are of the same type then they can always play
+        {
+            self.canPlay = true;
         }
     }
 

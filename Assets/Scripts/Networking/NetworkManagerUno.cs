@@ -29,6 +29,8 @@ public class NetworkManagerUno : NetworkManager
         {
             gameManager.players[i].playerNumber = i;
         }
+
+        Debug.Log("Added player");
     }
 
     //This happens when a client disconnects from the server

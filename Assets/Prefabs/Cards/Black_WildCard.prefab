@@ -129,11 +129,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  ID: 1
   type: 0
+  ID: 1
   wildCard: 1
+  callNextTurn: 0
   restingPos: {x: 0, y: 0, z: 0}
   selectedPos: {x: 0, y: 0, z: 0}
+  myPlayer: {fileID: 0}
+  yellowSprite: {fileID: -1531039759649091243, guid: 1afdb1fd7d00b9d479ab530e2956fa85, type: 3}
+  redSprite: {fileID: 304577067450076217, guid: 1afdb1fd7d00b9d479ab530e2956fa85, type: 3}
+  blueSprite: {fileID: -2053691170940994476, guid: 1afdb1fd7d00b9d479ab530e2956fa85, type: 3}
+  greenSprite: {fileID: 7732449008094829044, guid: 1afdb1fd7d00b9d479ab530e2956fa85, type: 3}
 --- !u!114 &4288860048190053836
 MonoBehaviour:
   m_ObjectHideFlags: 0

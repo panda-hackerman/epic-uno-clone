@@ -114,8 +114,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  playerNumber: 0
   cardGap: 0.4
-  myHand: []
+  yellow: {fileID: 0}
+  red: {fileID: 0}
+  blue: {fileID: 0}
+  green: {fileID: 0}
   cardPrefabs:
   - {fileID: 560020315528625680, guid: 55d01467d949ac2459e3008c7ee293a7, type: 3}
   - {fileID: 500137167884633502, guid: f847d8e98b346094483906d7dd5e2873, type: 3}
@@ -123,6 +127,8 @@ MonoBehaviour:
   - {fileID: 1135409553938513953, guid: f96de0ce187dc4d46b57cb3ca6eb53ff, type: 3}
   - {fileID: 6651922375195340967, guid: d2d2f06067177494eabe2f665a6d7cbb, type: 3}
   - {fileID: 529432878023248194, guid: 18e98ad102f1cf140883bbd24d0d6a36, type: 3}
+  myHand: 
+  physicalCards: []
 --- !u!114 &5703238891101118184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,6 +173,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  layerMask:
+  cardLayer:
     serializedVersion: 2
     m_Bits: 256
+  drawPileLayer:
+    serializedVersion: 2
+    m_Bits: 512

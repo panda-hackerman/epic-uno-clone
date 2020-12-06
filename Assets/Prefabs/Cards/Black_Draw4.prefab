@@ -129,11 +129,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  ID: 0
   type: 0
+  ID: 0
   wildCard: 1
+  callNextTurn: 0
   restingPos: {x: 0, y: 0, z: 0}
   selectedPos: {x: 0, y: 0, z: 0}
+  myPlayer: {fileID: 0}
+  yellowSprite: {fileID: 3547337057529970296, guid: 1afdb1fd7d00b9d479ab530e2956fa85, type: 3}
+  redSprite: {fileID: 5472488073973984686, guid: 1afdb1fd7d00b9d479ab530e2956fa85, type: 3}
+  blueSprite: {fileID: -6090591754766070688, guid: 1afdb1fd7d00b9d479ab530e2956fa85, type: 3}
+  greenSprite: {fileID: 5418014149141699613, guid: 1afdb1fd7d00b9d479ab530e2956fa85, type: 3}
   cardsToDraw: 4
 --- !u!114 &3338725265993023488
 MonoBehaviour:
