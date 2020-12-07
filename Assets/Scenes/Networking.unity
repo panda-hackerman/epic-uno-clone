@@ -1871,7 +1871,7 @@ GameObject:
   - component: {fileID: 5241544681320765874}
   - component: {fileID: 5241544681320765873}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: Main Camera But Epic
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
