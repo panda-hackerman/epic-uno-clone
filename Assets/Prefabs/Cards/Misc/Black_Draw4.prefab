@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: -1764670431
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1359366347219086848, guid: 1afdb1fd7d00b9d479ab530e2956fa85, type: 3}
+  m_Sprite: {fileID: 7967232130116247983, guid: 6ae68e99df4eba44e880244a08781788, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -136,10 +136,10 @@ MonoBehaviour:
   restingPos: {x: 0, y: 0, z: 0}
   selectedPos: {x: 0, y: 0, z: 0}
   myPlayer: {fileID: 0}
-  yellowSprite: {fileID: 3547337057529970296, guid: 1afdb1fd7d00b9d479ab530e2956fa85, type: 3}
-  redSprite: {fileID: 5472488073973984686, guid: 1afdb1fd7d00b9d479ab530e2956fa85, type: 3}
-  blueSprite: {fileID: -6090591754766070688, guid: 1afdb1fd7d00b9d479ab530e2956fa85, type: 3}
-  greenSprite: {fileID: 5418014149141699613, guid: 1afdb1fd7d00b9d479ab530e2956fa85, type: 3}
+  yellowSprite: {fileID: -3914725721800300381, guid: 6ae68e99df4eba44e880244a08781788, type: 3}
+  redSprite: {fileID: -4952370270292751417, guid: 6ae68e99df4eba44e880244a08781788, type: 3}
+  blueSprite: {fileID: -8612150804433969966, guid: 6ae68e99df4eba44e880244a08781788, type: 3}
+  greenSprite: {fileID: -5361786169916785022, guid: 6ae68e99df4eba44e880244a08781788, type: 3}
   cardsToDraw: 4
 --- !u!114 &3338725265993023488
 MonoBehaviour:

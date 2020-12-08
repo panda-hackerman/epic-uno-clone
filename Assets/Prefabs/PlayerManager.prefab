@@ -39,11 +39,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 846432352942143095}
+  - component: {fileID: 5703238891101118184}
+  - component: {fileID: -3544388749831422660}
+  - component: {fileID: 3602593410930025351}
+  - component: {fileID: 5315936626643433562}
   - component: {fileID: 8226970896465226996}
   - component: {fileID: 63510111610778073}
-  - component: {fileID: 3602593410930025351}
-  - component: {fileID: 5703238891101118184}
-  - component: {fileID: 5315936626643433562}
+  - component: {fileID: 322593141853776225}
   m_Layer: 0
   m_Name: PlayerManager
   m_TagString: Untagged
@@ -66,6 +68,145 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5703238891101118184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3350710207091810496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 74c3cc3fba56ed14587b0fc96a7e568e, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: ActionMap
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!114 &-3544388749831422660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3350710207091810496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d67ef9fa136e6104c977b0524624fc19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0
+  matchID: 
+--- !u!114 &3602593410930025351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3350710207091810496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e711bec6506a3d4e8abcbfbda70c240, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  chooseColorButtons: {fileID: 0}
+  playerNumber: 0
+  cardGap: 0.4
+  cardPrefabs:
+  - {fileID: 560020315528625680, guid: 55d01467d949ac2459e3008c7ee293a7, type: 3}
+  - {fileID: 500137167884633502, guid: f847d8e98b346094483906d7dd5e2873, type: 3}
+  - {fileID: 6201474205725887985, guid: 1fae020cf91a4854f817493b12d58157, type: 3}
+  - {fileID: 4075499733808874277, guid: d7b422febfaf1464995dcf21300a2316, type: 3}
+  - {fileID: 7190237164333156556, guid: 61d1a263dbde86142a8753e6d13e356d, type: 3}
+  - {fileID: 3716190396856488516, guid: 85d3fbc8713e1d94d8429c3dbb319a06, type: 3}
+  - {fileID: 8410002370365917612, guid: b4e169133d1c33046a946e6f172457f0, type: 3}
+  - {fileID: 7089831773105229610, guid: 68c5c045a3442af4ead313fedf6ac28f, type: 3}
+  - {fileID: 1986688078387413904, guid: f80882ce752f2b3469d81f11e4272642, type: 3}
+  - {fileID: 903111062674119797, guid: 9d07729b3a1eb934ca6aa6c0330ac8ff, type: 3}
+  - {fileID: 3606444310054897983, guid: e5bbbc21f16109d45b873008fe770977, type: 3}
+  - {fileID: 9176410842791596559, guid: abc6afbe3bb860945a64cd2477a00fc3, type: 3}
+  - {fileID: 5943390518050192089, guid: 4c4e862d5e4c08e44a12225be7dbe19a, type: 3}
+  - {fileID: 7934989085197770996, guid: f444d25f718f6c14e884e7551bb0b35a, type: 3}
+  - {fileID: 7325062865796819559, guid: 67b53bee24fd1db4abf26395c535c07d, type: 3}
+  - {fileID: 6324723657024062156, guid: e6e25b9ec20fd8a41a33805f93ab9a86, type: 3}
+  - {fileID: 751533322878673762, guid: aa96a05d3e9b12247a05a45ae2c54e5f, type: 3}
+  - {fileID: 1135409553938513953, guid: f96de0ce187dc4d46b57cb3ca6eb53ff, type: 3}
+  - {fileID: 7142562043579973431, guid: 140e60b1e36ffa84abd79dc5f7a6fce3, type: 3}
+  - {fileID: 5638400135666554730, guid: b8f3919085db1354fae0af7cd241c63b, type: 3}
+  - {fileID: 2136447880699211605, guid: 121f89b6809ecc24e9f7c9485b0b2fb4, type: 3}
+  - {fileID: 1110767397702243637, guid: a6b97801262778444b90946dc5027723, type: 3}
+  - {fileID: 8686462791912961318, guid: acaae2a6b251cc244a3f10f4164249df, type: 3}
+  - {fileID: 8900069262243815142, guid: 70634e6798ac0d841897402c0e0d3396, type: 3}
+  - {fileID: 2223384846796938549, guid: 7812a599ac2ecbe4b8031626706a6495, type: 3}
+  - {fileID: 3828912768784579431, guid: 0ca3af2b38257ed4c8ca899c92200a19, type: 3}
+  - {fileID: 7377208090106253940, guid: a714f377f9e785141a7ca1b7e3c73b4f, type: 3}
+  - {fileID: 2732756534284558044, guid: 56c0497d7c522014caa90eb33bacf19b, type: 3}
+  - {fileID: 5418272564308671545, guid: 1677fab75444d7846b548bbfea49c498, type: 3}
+  - {fileID: 3025706862426927952, guid: b947b3d221981fe4eb80f6087e72677e, type: 3}
+  - {fileID: 6651922375195340967, guid: d2d2f06067177494eabe2f665a6d7cbb, type: 3}
+  - {fileID: 5042679364542000874, guid: dc9fdfd0b1742b0449b4c8c4535ee8e6, type: 3}
+  - {fileID: 3350171998584361772, guid: de565ae5bd2799b41887250b64aebee0, type: 3}
+  - {fileID: 4918950924749285351, guid: 1b32f95f18b9d8a4c9564b0b901264c1, type: 3}
+  - {fileID: 4951440981768236699, guid: 45c2c2403dc902d49b7954f8c4a7032a, type: 3}
+  - {fileID: 4923034759316849304, guid: a2283d03427bf8648b5c1afabafbc4ff, type: 3}
+  - {fileID: 8027716951275236262, guid: 9951a394a5fde58498ef3a8108f056c2, type: 3}
+  - {fileID: 322188226498333302, guid: 86d877ecff3540649a7f86ebfc72b79f, type: 3}
+  - {fileID: 7786938345092489867, guid: 96f6a3ad418ab0f4cafff27c8558cff1, type: 3}
+  - {fileID: 2204565600377731992, guid: 31165564da171154a88f9cb4cedda53c, type: 3}
+  - {fileID: 4521194295563321761, guid: a78ad9541373dc84da3c1bd5f7ec1bf8, type: 3}
+  - {fileID: 6361804507419218231, guid: d78af00169e732f48aca7d78db524914, type: 3}
+  - {fileID: 6620980484322915136, guid: ef7942d2aa0d6d14d89a1988b4f2856c, type: 3}
+  - {fileID: 529432878023248194, guid: 18e98ad102f1cf140883bbd24d0d6a36, type: 3}
+  - {fileID: 2133218757589070079, guid: fc77589f6cd6dc949a515dfda2f2992c, type: 3}
+  - {fileID: 3071597573141885635, guid: 12217b3ac8daca44c81f7acb50c691ed, type: 3}
+  - {fileID: 5840875303605652192, guid: 3406d04dc75b6064ab1a0ad72784fee0, type: 3}
+  - {fileID: 883506583128843161, guid: a5ade36b5c06e58489eea19e03336d2f, type: 3}
+  - {fileID: 2891743853474701059, guid: 5cc6503e94c373142bfd37fc96ddea90, type: 3}
+  - {fileID: 2847787001772961768, guid: ce551613af39bd44eaf6e2dc858ec48b, type: 3}
+  - {fileID: 68762211153377233, guid: 8fa05104891748b49bd8b2cfff4ee5d8, type: 3}
+  - {fileID: 5155226896050781670, guid: 375b1fb1e7084484e85c6fbd9f7a2dac, type: 3}
+  - {fileID: 2137823455410254836, guid: fa3662d8f9141b34e99d51195f9c9f48, type: 3}
+  myHand: 
+  physicalCards: []
+--- !u!114 &5315936626643433562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3350710207091810496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9744d1653808404194a4c00348c1872, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  cardLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  drawPileLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  canPlay: 0
 --- !u!114 &8226970896465226996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,7 +241,7 @@ MonoBehaviour:
   localPositionSensitivity: 0.01
   localRotationSensitivity: 0.01
   localScaleSensitivity: 0.01
---- !u!114 &3602593410930025351
+--- !u!114 &322593141853776225
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -109,73 +250,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3350710207091810496}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e711bec6506a3d4e8abcbfbda70c240, type: 3}
+  m_Script: {fileID: 11500000, guid: 1020a74962faada4b807ac5dc053a4cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
-  syncInterval: 0.1
-  playerNumber: 0
-  cardGap: 0.4
-  yellow: {fileID: 0}
-  red: {fileID: 0}
-  blue: {fileID: 0}
-  green: {fileID: 0}
-  cardPrefabs:
-  - {fileID: 560020315528625680, guid: 55d01467d949ac2459e3008c7ee293a7, type: 3}
-  - {fileID: 500137167884633502, guid: f847d8e98b346094483906d7dd5e2873, type: 3}
-  - {fileID: 7190237164333156556, guid: 61d1a263dbde86142a8753e6d13e356d, type: 3}
-  - {fileID: 1135409553938513953, guid: f96de0ce187dc4d46b57cb3ca6eb53ff, type: 3}
-  - {fileID: 6651922375195340967, guid: d2d2f06067177494eabe2f665a6d7cbb, type: 3}
-  - {fileID: 529432878023248194, guid: 18e98ad102f1cf140883bbd24d0d6a36, type: 3}
-  myHand: 
-  physicalCards: []
---- !u!114 &5703238891101118184
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3350710207091810496}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 74c3cc3fba56ed14587b0fc96a7e568e, type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: ActionMap
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
---- !u!114 &5315936626643433562
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3350710207091810496}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9744d1653808404194a4c00348c1872, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  cardLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  drawPileLayer:
-    serializedVersion: 2
-    m_Bits: 512
+  syncInterval: 0
+  currentMatchDebug: 

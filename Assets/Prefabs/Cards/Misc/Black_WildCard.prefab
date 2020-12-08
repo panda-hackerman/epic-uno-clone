@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: -1764670431
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 5723497406748648877, guid: 1afdb1fd7d00b9d479ab530e2956fa85, type: 3}
+  m_Sprite: {fileID: 5082098008300868014, guid: 6ae68e99df4eba44e880244a08781788, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -136,10 +136,10 @@ MonoBehaviour:
   restingPos: {x: 0, y: 0, z: 0}
   selectedPos: {x: 0, y: 0, z: 0}
   myPlayer: {fileID: 0}
-  yellowSprite: {fileID: -1531039759649091243, guid: 1afdb1fd7d00b9d479ab530e2956fa85, type: 3}
-  redSprite: {fileID: 304577067450076217, guid: 1afdb1fd7d00b9d479ab530e2956fa85, type: 3}
-  blueSprite: {fileID: -2053691170940994476, guid: 1afdb1fd7d00b9d479ab530e2956fa85, type: 3}
-  greenSprite: {fileID: 7732449008094829044, guid: 1afdb1fd7d00b9d479ab530e2956fa85, type: 3}
+  yellowSprite: {fileID: 6557062240801209029, guid: 6ae68e99df4eba44e880244a08781788, type: 3}
+  redSprite: {fileID: 8376944580718283380, guid: 6ae68e99df4eba44e880244a08781788, type: 3}
+  blueSprite: {fileID: 5054070583011151089, guid: 6ae68e99df4eba44e880244a08781788, type: 3}
+  greenSprite: {fileID: 1149081486785994572, guid: 6ae68e99df4eba44e880244a08781788, type: 3}
 --- !u!114 &4288860048190053836
 MonoBehaviour:
   m_ObjectHideFlags: 0
