@@ -4,20 +4,36 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Mirror;
 using Convert;
+using Unity.Collections;
 
 namespace Lobby
 {
+    [System.Serializable]
+    public class SyncListImageData : SyncList<ImageData> { }
+
+    /* This is the script for both the player in the lobby and in game
+     * a player is spawned as soon as you start the lobby scene, and
+     * continues when you start the game. The lobby player and game player
+     * are not seperate because that would require more work.
+     */
+
     public class Player : NetworkBehaviour
     {
+        [Header("My scripts")]
         public static Player localPlayer; //me :)
-
-        [SyncVar] public string matchID;
-
         NetworkMatchChecker networkMatchChecker; //Guid goes here
+
+        [Header("Info")]
+        [SyncVar] public string matchID;
+        [SyncVar] public string username;
+        [SyncVar] public ImageData iconData; //Raw bytes of image because mirror amirite
+
+        [Header("Card shit")]
+        public List<int> cardIDs = new List<int>();
+        public List<Card> cardObjs = new List<Card>();
 
         private void Start()
         {
-
             networkMatchChecker = GetComponent<NetworkMatchChecker>();
 
             if (isLocalPlayer)
@@ -28,6 +44,33 @@ namespace Lobby
             {
                 UILobby.instance.SpawnPlayerUIPrefab(this);
             }
+
+        }
+
+        public void DealCard(int id)
+        {
+            TargetAddCard(id);
+        }
+
+        [TargetRpc]
+        public void TargetAddCard(int id)
+        {
+            cardIDs.Add(id);
+
+            GameObject prefab = TurnManager.instance.drawPile.cards[id].prefab;
+            GameObject newCard = Instantiate(prefab, transform);
+
+            cardObjs.Add(newCard.GetComponent<Card>());
+
+        }
+
+        [Command]
+        public void CmdUpdateNameAndIcon(GameObject player, string username, ImageData icon)
+        {
+            Player _player = player.GetComponent<Player>();
+
+            _player.username = username;
+            _player.iconData = icon;
 
         }
 
@@ -45,7 +88,7 @@ namespace Lobby
             this.matchID = matchID;
             if (MatchMaker.instance.HostGame(matchID, gameObject))
             {
-                Debug.Log("Game hosted succesfully");
+                Debug.Log($"Game hosted succesfully with ID {matchID}");
                 networkMatchChecker.matchId = matchID.ToGuid();
                 TargetHostGame(true, matchID); //Successfully hosted the game
             }
@@ -60,7 +103,7 @@ namespace Lobby
         [TargetRpc]
         void TargetHostGame(bool success, string matchID)
         {
-            UILobby.instance.HostSuccess(success);
+            UILobby.instance.HostSuccess(success, matchID);
         }
 
         #endregion
@@ -78,22 +121,22 @@ namespace Lobby
             this.matchID = matchID;
             if (MatchMaker.instance.JoinGame(matchID, gameObject))
             {
-                Debug.Log("Game Joined succesfully");
+                Debug.Log($"Game joined succesfully with ID {matchID}");
                 networkMatchChecker.matchId = matchID.ToGuid();
-                TargetJoinGame(true, matchID); //Successfully Joined the game
+                TargetJoinGame(true, matchID); //Successfully joined the game
             }
             else
             {
                 Debug.LogWarning("Game Join failed");
-                TargetJoinGame(false, matchID); //Tell the Join the Join failed
+                TargetJoinGame(false, matchID); //Tell the client the Join failed
             }
         }
 
-        //Tell the Join if the game Join was successful
+        //Tell the client if the game Join was successful
         [TargetRpc]
         void TargetJoinGame(bool success, string matchID)
         {
-            UILobby.instance.JoinSuccess(success);
+            UILobby.instance.JoinSuccess(success, matchID);
         }
 
         #endregion
@@ -118,13 +161,28 @@ namespace Lobby
         }
 
         //Load the game scene
-        [TargetRpc] //Runs on every client
+        [TargetRpc] //Like ClientRpc but only runs on one client
         void TargetBeginGame()
         {
-            Debug.Log("Beginning game | " + matchID);
+            Debug.Log($"Beginning game | {matchID}");
 
-            //Additively load game scene
-            SceneManager.LoadScene(2, LoadSceneMode.Additive);
+            UILobby.instance.fallingCards.SetActive(false); //TODO: re-activate these when the game finishes
+
+            StartCoroutine(AsyncLoadGame());
+        }
+
+        IEnumerator AsyncLoadGame()
+        {
+            //Additively load game scene; meaning load it ontop of the lobby scene
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("MainGame", LoadSceneMode.Additive);
+
+            while (!asyncLoad.isDone)
+            {
+                Debug.Log("Loading scene...");
+                yield return null;
+            }
+
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName("MainGame")); //Make the game scene the main scene
         }
 
         #endregion

@@ -58,7 +58,7 @@ public class ServerGameManager : NetworkBehaviour
     
     [HideInInspector]
     [SyncVar]
-    public List<CardPrefab> drawPile;
+    public List<CardInfo> drawPile;
 
     public void DealCards(PlayerManager playerManager)
     {
@@ -75,7 +75,7 @@ public class ServerGameManager : NetworkBehaviour
     {
         Debug.Log("Starting to deal card...");
         List<double> cardWeights = new List<double>(); //List of doubles, which represents the chance of each card being picked
-        foreach(CardPrefab cardPrefab in drawPile) 
+        foreach(CardInfo cardPrefab in drawPile) 
         {
             //For every card currently in the deck, add the number of them that exist in the deck
             cardWeights.Add(cardPrefab.numberInDeck);
@@ -87,9 +87,9 @@ public class ServerGameManager : NetworkBehaviour
         Debug.Log("Picked index #" + pickedCardIndex);
 
         //Add the card to the player's hand and set some variables
-        CardPrefab pickedCard = drawPile[pickedCardIndex];
-        pickedCard.card.ID = pickedCardIndex; //The ID is the card's position in the list
-        playerManager.RpcAddCard(pickedCard.card.ID);
+        CardInfo pickedCard = drawPile[pickedCardIndex];
+        pickedCard.prefab.GetComponent<Card>().ID = pickedCardIndex; //The ID is the card's position in the list
+        playerManager.RpcAddCard(pickedCard.prefab.GetComponent<Card>().ID);
 
         //Since we've taken a card from the deck, the number of them decreses (and is less likely to be drawn next time)
         drawPile[pickedCardIndex].numberInDeck--;

@@ -91,6 +91,8 @@ GameObject:
   - component: {fileID: 2160618314321108028}
   - component: {fileID: 9018934154457667981}
   - component: {fileID: 9168284944358231195}
+  - component: {fileID: 2220488654794458007}
+  - component: {fileID: 3776048982271928505}
   m_Layer: 5
   m_Name: UI Player
   m_TagString: Untagged
@@ -166,7 +168,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea83e0658fa267344a6a866b71e54891, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  image: {fileID: 2792852252812591846}
   text: {fileID: 7985684839884607423}
+--- !u!114 &2220488654794458007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391707736337135755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  m_AssetId: 
+  hasSpawned: 0
+--- !u!114 &3776048982271928505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391707736337135755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1020a74962faada4b807ac5dc053a4cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0
+  currentMatchDebug: 
 --- !u!1 &6673890521027939390
 GameObject:
   m_ObjectHideFlags: 0
@@ -225,14 +261,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5568628, g: 0.26666668, b: 0.6784314, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: 2800000, guid: 63338d2c7d91e064590c3cf379cade30, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0

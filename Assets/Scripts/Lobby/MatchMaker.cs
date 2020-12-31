@@ -7,7 +7,7 @@ using Convert;
 namespace Lobby
 {
     [System.Serializable]
-    public class Match //Match class holds all the information for the match
+    public class Match //The Match class holds all the information for the match, such as the id and the players
     {
         public Match() { } //Contructor
 
@@ -23,17 +23,21 @@ namespace Lobby
     }
 
     [System.Serializable]
-    public class SyncListGameObject : SyncList<GameObject> { }
+    public class SyncListGameObject : SyncList<GameObject> { } //Sync for a list of gameobjects
 
     [System.Serializable]
-    public class SyncListMatch : SyncList<Match> { }
+    public class SyncListMatch : SyncList<Match> { } //Sync for a list of matches
+
+    /* The match maker... makes matches. As well as generally handling
+     * matches, and joining an already made match. Also generates matchIDs.
+     */
 
     public class MatchMaker : NetworkBehaviour
     {
 
         public static MatchMaker instance;
 
-        public SyncListMatch matches = new SyncListMatch();
+        public SyncListMatch matches = new SyncListMatch(); //TODO: Remove a match if every player leaves
         public SyncListString matchIDs = new SyncListString();
 
         public GameObject turnManagerPrefab;
@@ -43,7 +47,7 @@ namespace Lobby
             instance = this;
         }
 
-        public bool HostGame(string matchID, GameObject player)
+        public bool HostGame(string matchID, GameObject player) //Self explanitory; attempt to host the game
         {
             if (!matchIDs.Contains(matchID))
             {
@@ -59,7 +63,7 @@ namespace Lobby
             }
         }
 
-        public bool JoinGame(string matchID, GameObject player)
+        public bool JoinGame(string matchID, GameObject player) //Attempt to join the game
         {
             if (matchIDs.Contains(matchID))
             {
@@ -67,6 +71,7 @@ namespace Lobby
                 {
                     if (matches[i].matchID == matchID)
                     {
+                        //TODO: Check if there are already 8 players in the lobby
                         matches[i].players.Add(player);
                         break;
                     }
@@ -76,40 +81,43 @@ namespace Lobby
             }
             else
             {
-                Debug.Log("Match ID does not"); //TODO: Get another code
+                Debug.Log("Match ID does not exist"); //TODO: Maybe tell the player this through a pop up or error.
                 return false;
             }
         }
 
-        public void BeginGame(string matchID)
+        public void BeginGame(string matchID) //When the host clicks 'begin game'
         {
             GameObject newTurnManager = Instantiate(turnManagerPrefab);
+            NetworkServer.Spawn(newTurnManager);
             newTurnManager.GetComponent<NetworkMatchChecker>().matchId = matchID.ToGuid();
             TurnManager turnManager = newTurnManager.GetComponent<TurnManager>();
 
             for (int i = 0; i < matches.Count; i++)
             {
-                if (matches[i].matchID == matchID)
+                if (matches[i].matchID == matchID) //Loop thru the matches and look for the one with a matching id
                 {
-                    foreach (GameObject player in matches[i].players)
+                    foreach (GameObject player in matches[i].players) //Call this on every player
                     {
                         Player _player = player.GetComponent<Player>();
                         turnManager.AddPlayer(_player);
-                        _player.StartGame();
+                        _player.StartGame(); //Tell the player to start the game. Loads the scene and other stuff.
                     }
-                    break;
+
+                    turnManager.GameStart();
+                    break; //we found the right match so stop searching
                 }
             }
         }
 
         //Generate an ID for the match
-        public static string GetRandomMatchID ()
+        public static string GetRandomMatchID()
         {
-            string id = string.Empty;
+            string id = "";
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 6; i++)
             {
-                int random = Random.Range(0, 36); // A-Z, 0-9
+                int random = Random.Range(0, 36); //A-Z, 0-9
 
                 if (random < 26)
                 {

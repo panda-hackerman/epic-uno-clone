@@ -9,12 +9,13 @@
  */
 
 [System.Serializable]
-public class CardPrefab
+public class CardInfo
 {
     public int numberInDeck;
 
     public GameObject prefab;
 
+/*
     private Card _card;
     public Card card
     {
@@ -24,6 +25,6 @@ public class CardPrefab
             return _card;
         }
         set { _card = value; }
-    }
+    }*/
 }
 
