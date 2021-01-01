@@ -48,6 +48,15 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   matchID: 
+  username: 
+  iconData:
+    byteArray: 
+    width: 0
+    height: 0
+    format: 0
+  deck: {fileID: 11400000, guid: fdfaa3d64cbac474db9cb3dbc5b2f795, type: 2}
+  cardIDs: 
+  cardObjs: []
 --- !u!114 &-7642414604175262697
 MonoBehaviour:
   m_ObjectHideFlags: 0

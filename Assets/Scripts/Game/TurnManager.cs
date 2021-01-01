@@ -16,7 +16,8 @@ public class TurnManager : NetworkBehaviour
     public static TurnManager instance;
 
     public List<Player> players = new List<Player>();
-    public UneDrawPile drawPile;
+
+    public List<int> cardNums = new List<int>(); //Pos in list = card id, value = number currently in deck
 
     private void Start()
     {
@@ -33,12 +34,13 @@ public class TurnManager : NetworkBehaviour
         //TODO: Deal cards
         Debug.Log("The game has started!");
 
-        SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetSceneByName("MainGame"));
-
         foreach (Player player in players)
         {
+            Debug.Log($"Dealing cards to {player.name}");
+
             for (int i = 0; i < 8; i++)
             {
+                Debug.Log($"{i}...");
                 DealCard(player);
             }
         }
@@ -55,25 +57,11 @@ public class TurnManager : NetworkBehaviour
 
     public void DealCard(Player player)
     {
-        int card = PickCard();
+        int card = AdvMath.Roulette(cardNums.ToArray()); //Choose a card based on how many there are (more in deck = more likely to pick)
+
+        Debug.Log($"Chose card #{card}!");
 
         player.DealCard(card); //Player adds this card to their hand
-        drawPile.cards[card].numberInDeck--; //Remove one of this from the draw pile
-    }
-
-    public int PickCard() //Returns a random card from the draw pile
-    {
-        int cardsLeft = drawPile.cards.Count; //Cards in draw pile
-
-        double[] cardWeights = new double[cardsLeft]; //Each double represents how many of that card there is left
-
-        for (int i = 0; i < cardsLeft; i++)
-        {
-            cardWeights[i] = drawPile.cards[i].numberInDeck;
-        }
-
-        int index = AdvMath.Roulette(cardWeights); //Cards with a higher count are more likely to be picked
-
-        return index;
+        cardNums[card]--; //Remove one of this from the draw pile
     }
 }

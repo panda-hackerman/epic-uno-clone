@@ -53,19 +53,19 @@ namespace AdvacedMathStuff
             return weights.Length - 1;
         }
 
-        //Same thing but with a list instead of an array
-        public static int Roulette(List<double> weights)
+        //Same thing but with ints instead of a double
+        public static int Roulette(int[] weights)
         {
-            double totalWeight = 0;
+            int totalWeight = 0;
 
-            foreach (double item in weights)
+            foreach (int item in weights)
             {
                 totalWeight += item;
             }
 
             double randomPoint = Random.value * totalWeight;
 
-            for (int i = 0; i < weights.Count; i++)
+            for (int i = 0; i < weights.Length; i++)
             {
                 if (randomPoint < weights[i])
                     return i;
@@ -73,7 +73,7 @@ namespace AdvacedMathStuff
                     randomPoint -= weights[i];
             }
 
-            return weights.Count - 1;
+            return weights.Length - 1;
         }
         #endregion
 

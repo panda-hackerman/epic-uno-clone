@@ -26,11 +26,13 @@ namespace Lobby
         [Header("Info")]
         [SyncVar] public string matchID;
         [SyncVar] public string username;
+        [HideInInspector]
         [SyncVar] public ImageData iconData; //Raw bytes of image because mirror amirite
 
         [Header("Card shit")]
-        public List<int> cardIDs = new List<int>();
-        public List<Card> cardObjs = new List<Card>();
+        public UneDeck deck; //List of card prefabs
+        public List<int> cardIDs = new List<int>(); //Ids of cards in my hand
+        public List<Card> cardObjs = new List<Card>(); //Physical card objs (local only)
 
         private void Start()
         {
@@ -57,7 +59,7 @@ namespace Lobby
         {
             cardIDs.Add(id);
 
-            GameObject prefab = TurnManager.instance.drawPile.cards[id].prefab;
+            GameObject prefab = deck.cards[id];
             GameObject newCard = Instantiate(prefab, transform);
 
             cardObjs.Add(newCard.GetComponent<Card>());
@@ -183,6 +185,7 @@ namespace Lobby
             }
 
             SceneManager.SetActiveScene(SceneManager.GetSceneByName("MainGame")); //Make the game scene the main scene
+            SceneManager.MoveGameObjectToScene(TurnManager.instance.gameObject, SceneManager.GetSceneByName("MainGame"));
         }
 
         #endregion
