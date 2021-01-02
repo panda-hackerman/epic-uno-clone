@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5943390518050192089
+--- !u!1 &4408829143573513354
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,40 +8,36 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 32143986470348399}
-  - component: {fileID: 2890666497888676140}
-  - component: {fileID: 1177142552123232834}
-  - component: {fileID: 5833740026173088358}
-  - component: {fileID: 6739557389408762214}
-  - component: {fileID: 2153184030857021259}
+  - component: {fileID: 7184607227758619022}
+  - component: {fileID: 102042943797925418}
   m_Layer: 8
-  m_Name: Blue_N_8
+  m_Name: SpriteRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &32143986470348399
+--- !u!4 &7184607227758619022
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5943390518050192089}
+  m_GameObject: {fileID: 4408829143573513354}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
+  m_LocalPosition: {x: 0, y: 1.25, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 32143986470348399}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &2890666497888676140
+--- !u!212 &102042943797925418
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5943390518050192089}
+  m_GameObject: {fileID: 4408829143573513354}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -86,6 +82,41 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &5943390518050192089
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 32143986470348399}
+  - component: {fileID: 1177142552123232834}
+  - component: {fileID: 5833740026173088358}
+  - component: {fileID: 6739557389408762214}
+  - component: {fileID: 2153184030857021259}
+  m_Layer: 8
+  m_Name: Blue_N_8
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &32143986470348399
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5943390518050192089}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
+  m_Children:
+  - {fileID: 7184607227758619022}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1177142552123232834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,7 +153,7 @@ MonoBehaviour:
   callNextTurn: 1
   restingPos: {x: 0, y: 0, z: 0}
   selectedPos: {x: 0, y: 0, z: 0}
-  myPlayer: {fileID: 0}
+  spriteRenderer: {fileID: 0}
   cardValue: 8
 --- !u!65 &6739557389408762214
 BoxCollider:

@@ -16,6 +16,6 @@ public class WildCard : Card
     {
         base.PlayCard();
 
-        myPlayer.chooseColorButtons.SetActive(true);
+        //myPlayer.chooseColorButtons.SetActive(true);
     }
 }

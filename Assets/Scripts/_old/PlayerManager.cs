@@ -72,7 +72,7 @@ public class PlayerManager : NetworkBehaviour
             physicalCards.Add(card);
 
             cardPhysical.transform.parent = transform;
-            card.myPlayer = this; //Who's your daddy
+            //card.myPlayer = this; //Who's your daddy
         }
 
         UpdateCardPlacement();

@@ -15,7 +15,17 @@ public abstract class Card : NetworkBehaviour
     public bool callNextTurn = true;
 
     [HideInInspector] public Vector3 restingPos, selectedPos;
-    [HideInInspector] public PlayerManager myPlayer;
+
+    private SpriteRenderer _spriteRenderer;
+    public SpriteRenderer spriteRenderer
+    {
+        get
+        {
+            if (!_spriteRenderer)
+                _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+            return _spriteRenderer;
+        }
+    }
 
     public virtual void Start() { }
 
