@@ -4,6 +4,7 @@ using UnityEngine;
 using Mirror;
 using AdvacedMathStuff;
 
+[System.Obsolete]
 public class PlayerManager : NetworkBehaviour
 {
     ServerGameManager gameManager;

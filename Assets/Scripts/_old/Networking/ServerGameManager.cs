@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using AdvacedMathStuff;
 
+[System.Obsolete]
 public class ServerGameManager : NetworkBehaviour
 {
     public List<PlayerManager> players = new List<PlayerManager>();

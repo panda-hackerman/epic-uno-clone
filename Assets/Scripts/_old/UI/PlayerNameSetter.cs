@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using TMPro;
 
+[System.Obsolete]
 public class PlayerNameSetter : MonoBehaviour
 {
     [Header("UI")]

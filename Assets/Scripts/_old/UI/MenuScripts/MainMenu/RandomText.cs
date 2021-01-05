@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using TMPro;
 
+[System.Obsolete]
 public class RandomText : MonoBehaviour
 {
     [SerializeField] private string[] _sentance = null;

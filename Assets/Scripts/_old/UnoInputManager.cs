@@ -6,6 +6,7 @@ using Mirror;
 using AdvacedMathStuff;
 using System.Linq;
 
+[System.Obsolete]
 public class UnoInputManager : NetworkBehaviour
 {
     ServerGameManager gameManager;
