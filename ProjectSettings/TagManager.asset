@@ -8,6 +8,7 @@ TagManager:
   - Blue
   - Red
   - Yellow
+  - GameCamera
   layers:
   - Default
   - TransparentFX

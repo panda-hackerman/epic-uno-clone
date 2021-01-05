@@ -63,7 +63,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.68, y: 2.58, z: 0.013413824}
-  m_Center: {x: 0, y: 0, z: 0.0003718771}
+  m_Center: {x: 0, y: 1.25, z: 0.0003718771}
 --- !u!114 &1702585224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,9 +82,8 @@ MonoBehaviour:
   ID: 1
   wildCard: 1
   callNextTurn: 0
-  restingPos: {x: 0, y: 0, z: 0}
-  selectedPos: {x: 0, y: 0, z: 0}
-  spriteRenderer: {fileID: 0}
+  isSelected: 0
+  sortingOrder: 0
   yellowSprite: {fileID: 6557062240801209029, guid: 6ae68e99df4eba44e880244a08781788, type: 3}
   redSprite: {fileID: 8376944580718283380, guid: 6ae68e99df4eba44e880244a08781788, type: 3}
   blueSprite: {fileID: 5054070583011151089, guid: 6ae68e99df4eba44e880244a08781788, type: 3}

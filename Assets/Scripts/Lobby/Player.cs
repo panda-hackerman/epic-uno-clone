@@ -21,6 +21,7 @@ namespace Lobby
     {
         [Header("My scripts")]
         public static Player localPlayer; //me :)
+        InputManager inputManager;
         NetworkMatchChecker networkMatchChecker; //Guid goes here
 
         [Header("Info")]
@@ -31,22 +32,24 @@ namespace Lobby
 
         [Header("Card shit")]
         public UneDeck deck; //List of card prefabs
+        public CardHand myHand;
         public List<int> cardIDs = new List<int>(); //Ids of cards in my hand
         public List<Card> cardObjs = new List<Card>(); //Physical card objs (local only)
 
         private void Start()
         {
+            inputManager = GetComponent<InputManager>();
             networkMatchChecker = GetComponent<NetworkMatchChecker>();
 
             if (isLocalPlayer)
             {
                 localPlayer = this; //Finding myself
+                name = "Local Player";
             }
             else
             {
                 UILobby.instance.SpawnPlayerUIPrefab(this);
             }
-
         }
 
         public void DealCard(int id)
@@ -57,13 +60,14 @@ namespace Lobby
         [TargetRpc]
         public void TargetAddCard(int id)
         {
-            cardIDs.Add(id);
-
             GameObject prefab = deck.cards[id];
-            GameObject newCard = Instantiate(prefab, transform);
+            GameObject newCard = Instantiate(prefab, myHand.Cards);
+            Card card = newCard.GetComponent<Card>();
 
-            cardObjs.Add(newCard.GetComponent<Card>());
+            card.OnCardDrawn();
 
+            cardIDs.Add(id);
+            cardObjs.Add(card);
         }
 
         [Command]
@@ -186,8 +190,18 @@ namespace Lobby
 
             SceneManager.SetActiveScene(SceneManager.GetSceneByName("MainGame")); //Make the game scene the main scene
             SceneManager.MoveGameObjectToScene(TurnManager.instance.gameObject, SceneManager.GetSceneByName("MainGame"));
+
+            Init();
+        }
+
+        public void Init()
+        {
+            BroadcastMessage("OnInit");
+
+            myHand.gameObject.SetActive(true);
         }
 
         #endregion
+
     }
 }

@@ -135,9 +135,8 @@ MonoBehaviour:
   ID: 4
   wildCard: 0
   callNextTurn: 1
-  restingPos: {x: 0, y: 0, z: 0}
-  selectedPos: {x: 0, y: 0, z: 0}
-  spriteRenderer: {fileID: 0}
+  isSelected: 0
+  sortingOrder: 0
   cardValue: 0
 --- !u!114 &2196990181217572924
 MonoBehaviour:
@@ -167,7 +166,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.68, y: 2.58, z: 0.013413824}
-  m_Center: {x: 0, y: 0, z: 0.0003718771}
+  m_Center: {x: 0, y: 1.25, z: 0.0003718771}
 --- !u!114 &8920453554393286979
 MonoBehaviour:
   m_ObjectHideFlags: 0

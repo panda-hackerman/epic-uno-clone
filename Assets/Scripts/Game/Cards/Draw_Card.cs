@@ -7,14 +7,14 @@ public class Draw_Card : WildCard
 {
     public int cardsToDraw = 4;
 
-    public override void DrawCard()
+    public override void OnCardDrawn()
     {
-        base.DrawCard();
+        base.OnCardDrawn();
     }
 
-    public override void PlayCard()
+    public override void OnCardPlayed()
     {
         if (wildCard)
-            base.PlayCard();
+            base.OnCardPlayed();
     }
 }

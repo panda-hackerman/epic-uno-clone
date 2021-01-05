@@ -5,19 +5,15 @@ using Mirror;
 
 public class ReverseCard : Card
 {
-    public override void DrawCard()
+    public override void OnCardDrawn()
     {
-        base.DrawCard();
+        base.OnCardDrawn();
     }
 
-    public override void PlayCard()
+    public override void OnCardPlayed()
     {
-        base.PlayCard();
+        base.OnCardPlayed();
     }
 
-    [Command]
-    private void CmdReverse()
-    {
-        //TODO: Tell the server to reverse :)
-    }
+    //TODO: Reverse
 }

@@ -33,7 +33,7 @@ public class ServerGameManager : NetworkBehaviour
         {
             GameObject oldestCard = discardPile[0];
             discardPile.Remove(oldestCard);
-            drawPile[oldestCard.GetComponent<Card>().ID].numberInDeck++;
+            //drawPile[oldestCard.GetComponent<Card>().ID].numberInDeck++;
             Destroy(oldestCard);
         }
 
@@ -56,9 +56,7 @@ public class ServerGameManager : NetworkBehaviour
 
     #region DRAW_PILE
     
-    [HideInInspector]
-    [SyncVar]
-    public List<CardInfo> drawPile;
+    //public List<CardInfo> drawPile;
 
     public void DealCards(PlayerManager playerManager)
     {

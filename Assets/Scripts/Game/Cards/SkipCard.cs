@@ -6,14 +6,14 @@ using Mirror;
 public class SkipCard : Card
 {
     // only cool things happen in this script ;)
-    public override void DrawCard()
+    public override void OnCardDrawn()
     {
-        base.DrawCard();
+        base.OnCardDrawn();
     }
 
-    public override void PlayCard()
+    public override void OnCardPlayed()
     {
-        base.PlayCard();
+        base.OnCardPlayed();
     }
 
     [Command]

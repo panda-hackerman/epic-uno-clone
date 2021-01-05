@@ -13,13 +13,13 @@ public class CardHand : MonoBehaviour
 {
     //Curve shit
     [Header("CardHand")]
-    public bool showArc = true;
-    public bool autoCalulateArc = true;
-    [Range(0, 3)] public float arcWidth = 2f;
-    [Range(0, 3)] public float arcHeight = 0.6f;
+    public bool showArc = true; //Visual representation of the bezier (enables/ disables line renderer)
+    public bool autoCalulateArc = true; //Automatically calulate the width and height based on card count
+    [Range(0, 3)] public float arcWidth = 2f; //Distance from the center to the side of the arc
+    [Range(0, 3)] public float arcHeight = 0.6f; //Distance from the center to the top of the arc
     public float cardXRot = 30f;
-    public int vertexCount = 50;
-    public Transform p0, p1, p2;
+    public int vertexCount = 50; //Detail of the line renderer arc
+    public Transform p0, p1, p2; //These are important
 
     //My refereces
     private LineRenderer lineRenderer;
@@ -39,10 +39,10 @@ public class CardHand : MonoBehaviour
 
     void CalcCurve()
     {
-        arcWidth = cardsInHand / 4.0f;
+        arcWidth = cardNumber / 4.0f;
         arcWidth = Mathf.Clamp(arcWidth, 0.0f, 3.0f);
 
-        arcHeight = cardsInHand / (40.0f / 3.0f);
+        arcHeight = cardNumber / (40.0f / 3.0f);
         arcHeight = Mathf.Clamp(arcHeight, 0.3f, 1.2f);
     }
 
@@ -50,7 +50,7 @@ public class CardHand : MonoBehaviour
     {
         int index = 0;
 
-        foreach(Transform transform in cards)
+        foreach(Transform transform in Cards)
         {
             if (!transform.TryGetComponent(out Card card)) //There shouldn't be anything here that isn't a card, but just in case
             {
@@ -59,15 +59,15 @@ public class CardHand : MonoBehaviour
                 continue;
             }
 
-            float t = (index + 0.5f) / cardsInHand;
+            float t = (index + 0.5f) / cardNumber;
 
             Vector3 position = AdvMath.Bezier(t, p0.position, p1.position, p2.position);
             float rotation = 0;
 
-            if (cardsInHand > 1)
+            if (cardNumber > 1) //To prevent division by 0 errors when there is only one card
             {
                 float totalArc = arcWidth * 10;
-                float rotPerCard = totalArc / (cardsInHand - 1);
+                float rotPerCard = totalArc / (cardNumber - 1);
                 float startRot = -1f * (totalArc / 2f);
 
                 rotation = startRot + (index * rotPerCard);
@@ -76,7 +76,7 @@ public class CardHand : MonoBehaviour
             transform.eulerAngles = new Vector3(cardXRot, 0, -rotation);
             transform.position = position;
 
-            card.spriteRenderer.sortingOrder = index;
+            card.sortingOrder = index;
 
             index++;
         }
@@ -86,20 +86,25 @@ public class CardHand : MonoBehaviour
     {
         if (!p0 || !p1 || !p2) return; //At least 3 points are required
 
-        p0.localPosition = Vector3.zero.X(-arcWidth);
-        p2.localPosition = Vector3.zero.X(arcWidth);
-        p1.localPosition = Vector3.zero.Y(arcHeight);
+        p0.localPosition = Vector3.zero.X(-arcWidth); //Move to the left by the width
+        p2.localPosition = Vector3.zero.X(arcWidth); //Move to the right by the width
+        p1.localPosition = Vector3.zero.Y(arcHeight); //Move up by the height
 
-        List<Vector3> pointList = new List<Vector3>();
-
-        for (float t = 0; t <= 1; t += 1.0f / vertexCount) //t is a point on the line and must be >= 0 & <= 1; 0 would be the start of the line and 0.5 would be in the middle
+        if (showArc)
         {
-            Vector3 point = AdvMath.Bezier(t, p0.position, p1.position, p2.position); //Bezier calulates a position on the curve given an interpolant (t) and 3-4 control points
-            pointList.Add(point);
+            List<Vector3> pointList = new List<Vector3>();
+
+            for (float t = 0; t <= 1; t += 1.0f / vertexCount) //t is a point on the line and must be >= 0 & <= 1; 0 would be the start of the line and 0.5 would be in the middle
+            {
+                Vector3 point = AdvMath.Bezier(t, p0.position, p1.position, p2.position); //Bezier calulates a position on the curve given an interpolant (t) and 3-4 (3 here) control points
+                pointList.Add(point);
+            }
+
+            lineRenderer.positionCount = pointList.Count;
+            lineRenderer.SetPositions(pointList.ToArray()); //Sets every point at once (pretty handy, eh?)
         }
 
-        lineRenderer.positionCount = pointList.Count;
-        lineRenderer.SetPositions(pointList.ToArray());
+        
     }
 
     private void OnDrawGizmos()
@@ -112,10 +117,10 @@ public class CardHand : MonoBehaviour
 
     #region READ_ONLY
 
-    public int cardsInHand { get { return cards.childCount; } }
+    public int cardNumber { get { return Cards.childCount; } }
 
     private Transform _cards;
-    public Transform cards
+    public Transform Cards
     {
         get
         {
