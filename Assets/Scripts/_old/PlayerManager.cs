@@ -4,6 +4,7 @@ using UnityEngine;
 using Mirror;
 using AdvacedMathStuff;
 
+[System.Obsolete]
 public class PlayerManager : NetworkBehaviour
 {
     ServerGameManager gameManager;
@@ -72,7 +73,7 @@ public class PlayerManager : NetworkBehaviour
             physicalCards.Add(card);
 
             cardPhysical.transform.parent = transform;
-            card.myPlayer = this; //Who's your daddy
+            //card.myPlayer = this; //Who's your daddy
         }
 
         UpdateCardPlacement();
@@ -80,7 +81,7 @@ public class PlayerManager : NetworkBehaviour
 
     public void UpdateCardPlacement()
     {
-        for (int i = 0; i < physicalCards.Count; i++)
+/*        for (int i = 0; i < physicalCards.Count; i++)
         {
             Card card = physicalCards[i];
 
@@ -113,7 +114,7 @@ public class PlayerManager : NetworkBehaviour
             card.transform.localPosition += new Vector3(0, 0.3f, 0);
             card.selectedPos = card.transform.position;
             card.transform.position = card.restingPos;
-        }
+        }*/
     }
 
     [Command]

@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine;
 
+[System.Obsolete]
 public class NetworkPlayerLobby : NetworkBehaviour
 {
     [Header("UI")]

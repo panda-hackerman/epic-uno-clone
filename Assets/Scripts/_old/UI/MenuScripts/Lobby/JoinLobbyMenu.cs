@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using TMPro;
 
+[System.Obsolete]
 public class JoinLobbyMenu : MonoBehaviour
 {
     [SerializeField] private NetworkManegerLobby _lobbyManeger = null;

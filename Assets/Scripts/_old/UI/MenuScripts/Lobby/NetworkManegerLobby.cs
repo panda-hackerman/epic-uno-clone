@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using Mirror;
 
+[System.Obsolete]
 public class NetworkManegerLobby : NetworkManager
 {
     [SerializeField] private int minPlayers = 2;

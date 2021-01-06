@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using TMPro;
 
+[System.Obsolete]
 public class PlayerProfile : MonoBehaviour
 {
     [Header("DisplayName")]

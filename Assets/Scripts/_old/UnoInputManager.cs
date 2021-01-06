@@ -6,6 +6,7 @@ using Mirror;
 using AdvacedMathStuff;
 using System.Linq;
 
+[System.Obsolete]
 public class UnoInputManager : NetworkBehaviour
 {
     ServerGameManager gameManager;
@@ -40,7 +41,7 @@ public class UnoInputManager : NetworkBehaviour
 
         foreach (Card card in playerManager.physicalCards)
         {
-            if (card) card.IsSelected = card == selectedCard;
+            //if (card) card.IsSelected = card == selectedCard;
         }
 
         //True if hovering over the discard pile
@@ -50,7 +51,7 @@ public class UnoInputManager : NetworkBehaviour
     [Command]
     public void CmdAddCardToDiscard(int id)
     {
-        GameObject newCard = Instantiate(gameManager.drawPile[id].prefab);
+/*        GameObject newCard = Instantiate(gameManager.drawPile[id].prefab);
         Destroy(newCard.GetComponent<Collider>());
         newCard.GetComponent<Card>().ID = id;
 
@@ -59,7 +60,7 @@ public class UnoInputManager : NetworkBehaviour
         newCard.transform.position = new Vector3(0f.GiveOrTake(0.1f), 0.01f, 0f.GiveOrTake(0.1f));
         newCard.transform.eulerAngles = new Vector3(90, 0, Random.Range(0f, 360f));
         gameManager.discardPile.Add(newCard);
-        gameManager.UpdateDiscardPile();
+        gameManager.UpdateDiscardPile();*/
     }
 
     public void OnSelect()
@@ -100,7 +101,7 @@ public class UnoInputManager : NetworkBehaviour
             if (!canPlay) return;
         }
 
-        selectedCard.PlayCard(); //You've been played! B)
+        selectedCard.OnCardPlayed(); //You've been played! B)
         if (selectedCard.callNextTurn) CmdNextTurn();
 
         //Get out of my hand and into the discard pile

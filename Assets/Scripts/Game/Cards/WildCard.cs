@@ -7,15 +7,15 @@ public class WildCard : Card
 {
     public Sprite yellowSprite, redSprite, blueSprite, greenSprite;
 
-    public override void DrawCard()
+    public override void OnCardDrawn()
     {
-        base.DrawCard();
+        base.OnCardDrawn();
     }
 
-    public override void PlayCard()
+    public override void OnCardPlayed()
     {
-        base.PlayCard();
+        base.OnCardPlayed();
 
-        myPlayer.chooseColorButtons.SetActive(true);
+        //myPlayer.chooseColorButtons.SetActive(true);
     }
 }

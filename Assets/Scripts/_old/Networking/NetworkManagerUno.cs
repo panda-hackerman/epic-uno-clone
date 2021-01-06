@@ -4,6 +4,7 @@ using UnityEngine;
 using Mirror;
 using System;
 
+[System.Obsolete]
 [AddComponentMenu("")]
 public class NetworkManagerUno : NetworkManager
 {

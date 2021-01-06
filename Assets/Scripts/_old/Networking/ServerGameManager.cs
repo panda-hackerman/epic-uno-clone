@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using AdvacedMathStuff;
 
+[System.Obsolete]
 public class ServerGameManager : NetworkBehaviour
 {
     public List<PlayerManager> players = new List<PlayerManager>();
@@ -33,7 +34,7 @@ public class ServerGameManager : NetworkBehaviour
         {
             GameObject oldestCard = discardPile[0];
             discardPile.Remove(oldestCard);
-            drawPile[oldestCard.GetComponent<Card>().ID].numberInDeck++;
+            //drawPile[oldestCard.GetComponent<Card>().ID].numberInDeck++;
             Destroy(oldestCard);
         }
 
@@ -56,9 +57,7 @@ public class ServerGameManager : NetworkBehaviour
 
     #region DRAW_PILE
     
-    [HideInInspector]
-    [SyncVar]
-    public List<CardInfo> drawPile;
+    //public List<CardInfo> drawPile;
 
     public void DealCards(PlayerManager playerManager)
     {
@@ -74,7 +73,7 @@ public class ServerGameManager : NetworkBehaviour
     public void DealCard(PlayerManager playerManager)
     {
         Debug.Log("Starting to deal card...");
-        List<double> cardWeights = new List<double>(); //List of doubles, which represents the chance of each card being picked
+/*        List<double> cardWeights = new List<double>(); //List of doubles, which represents the chance of each card being picked
         foreach(CardInfo cardPrefab in drawPile) 
         {
             //For every card currently in the deck, add the number of them that exist in the deck
@@ -93,7 +92,7 @@ public class ServerGameManager : NetworkBehaviour
 
         //Since we've taken a card from the deck, the number of them decreses (and is less likely to be drawn next time)
         drawPile[pickedCardIndex].numberInDeck--;
-        Debug.Log("Done!");
+        Debug.Log("Done!");*/
     }
 
     #endregion

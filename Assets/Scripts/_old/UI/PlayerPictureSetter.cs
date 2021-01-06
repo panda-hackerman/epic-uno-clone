@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+[System.Obsolete]
 public class PlayerPictureSetter : MonoBehaviour
 {
     private Image currentImage;

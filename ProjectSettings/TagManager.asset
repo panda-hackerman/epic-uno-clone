@@ -8,6 +8,7 @@ TagManager:
   - Blue
   - Red
   - Yellow
+  - GameCamera
   layers:
   - Default
   - TransparentFX
@@ -50,4 +51,7 @@ TagManager:
     locked: 0
   - name: Hand
     uniqueID: 2530296865
+    locked: 0
+  - name: Debug
+    uniqueID: 596043141
     locked: 0

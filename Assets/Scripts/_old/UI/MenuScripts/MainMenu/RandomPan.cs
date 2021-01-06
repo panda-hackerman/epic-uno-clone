@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[System.Obsolete]
 public class RandomPan : MonoBehaviour
 {
     [SerializeField] private Vector2 _maxRange = Vector2.zero;

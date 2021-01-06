@@ -14,23 +14,51 @@ public abstract class Card : NetworkBehaviour
     public bool wildCard = false;
     public bool callNextTurn = true;
 
-    [HideInInspector] public Vector3 restingPos, selectedPos;
-    [HideInInspector] public PlayerManager myPlayer;
+    public bool isSelected;
+    public int sortingOrder;
 
-    public virtual void Start() { }
+    public void Start() { }
 
-    public virtual void Update() { }
+    private void Update()
+    {
+        Vector3 defaultPos = new Vector3(0, 1.75f, 0);
+        spriteRenderer.transform.localPosition = defaultPos;
 
-    public bool IsSelected { set { transform.position = value ? selectedPos : restingPos; } }
+        if (isSelected)
+        {
+            spriteRenderer.transform.position += 0.25f * spriteRenderer.transform.up;
+            spriteRenderer.sortingOrder = 100;
+        }
+        else
+        {
+            spriteRenderer.sortingOrder = sortingOrder;
+        }
+    }
 
-    public virtual void DrawCard()
+    public virtual void OnCardDrawn()
     {
         // Called when this card is drawn or dealt
+        Debug.Log($"Drew card '{name}'");
     }
 
-    public virtual void PlayCard()
+    public virtual void OnCardPlayed()
     {
-        Debug.Log("Played Card: " + name);
         // Called when this card is discarded
+        Debug.Log($"Played card '{name}'");
     }
+
+    #region READ_ONLY
+
+    private SpriteRenderer _spriteRenderer;
+    public SpriteRenderer spriteRenderer
+    {
+        get
+        {
+            if (!_spriteRenderer)
+                _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+            return _spriteRenderer;
+        }
+    }
+
+    #endregion
 }

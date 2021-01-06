@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[System.Obsolete]
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] private NetworkManegerLobby _lobbyManeger = null;

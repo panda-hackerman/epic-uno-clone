@@ -8,6 +8,7 @@
  * and provide information that is required to spawn it in the first place.
  */
 
+[System.Obsolete]
 [System.Serializable]
 public class CardInfo
 {

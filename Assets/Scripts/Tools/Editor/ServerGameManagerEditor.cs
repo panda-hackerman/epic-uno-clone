@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEditorInternal;
 
+[System.Obsolete]
 [CustomEditor(typeof(ServerGameManager))]
 public class ServerGameManagerEditor : Editor
 {

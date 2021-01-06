@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Obsolete]
 public class CanvasInfo : MonoBehaviour
 {
     public Canvas canvas;

@@ -115,7 +115,7 @@ namespace Lobby
         {
             string id = "";
 
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 5; i++)
             {
                 int random = Random.Range(0, 36); //A-Z, 0-9
 
