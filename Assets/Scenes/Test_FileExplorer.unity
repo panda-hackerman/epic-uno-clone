@@ -167,7 +167,6 @@ GameObject:
   - component: {fileID: 228532598}
   - component: {fileID: 228532600}
   - component: {fileID: 228532599}
-  - component: {fileID: 228532601}
   m_Layer: 5
   m_Name: MagicImage
   m_TagString: Untagged
@@ -229,19 +228,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 228532597}
   m_CullTransparentMesh: 0
---- !u!114 &228532601
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 228532597}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b306dd3d5e3d3a42b38942733f89822, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  image_Texture: {fileID: 0}
 --- !u!1 &253081145
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,7 +240,7 @@ GameObject:
   - component: {fileID: 253081149}
   - component: {fileID: 253081148}
   - component: {fileID: 253081147}
-  - component: {fileID: 253081150}
+  - component: {fileID: 253081151}
   m_Layer: 5
   m_Name: MagicButton
   m_TagString: Untagged
@@ -375,7 +361,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 253081145}
   m_CullTransparentMesh: 0
---- !u!114 &253081150
+--- !u!114 &253081151
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -384,10 +370,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 253081145}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 331c95b7bf39e4792acecff50a972040, type: 3}
+  m_Script: {fileID: 11500000, guid: eca05c9a187f60b44aba58a9f783128a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   output: {fileID: 228532599}
+  resX: 70
+  resY: 70
 --- !u!1 &328368997
 GameObject:
   m_ObjectHideFlags: 0

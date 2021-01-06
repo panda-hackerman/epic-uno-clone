@@ -31,8 +31,8 @@ namespace Lobby
 
         [Header("Player Info")]
         [SerializeField] string playerName;
-        [SerializeField] Sprite playerIcon;
-        public Sprite defaultIcon;
+        [SerializeField] Texture2D playerIcon;
+        public Texture2D defaultIcon;
 
         [Header("Other")]
         public GameObject fallingCards;
@@ -118,7 +118,7 @@ namespace Lobby
 
         public void ChangeIcon(Toggle toggle)
         {
-            if (toggle.isOn) playerIcon = toggle.transform.GetChild(0).GetComponent<Image>().sprite;
+            if (toggle.isOn) playerIcon = (Texture2D)toggle.transform.GetChild(0).GetComponent<RawImage>().texture;
             else playerIcon = defaultIcon;
         }
 
@@ -127,7 +127,7 @@ namespace Lobby
             Player.localPlayer.username = playerName;
             //Player.localPlayer.iconData = playerIcon.texture.ToPixels();
 
-            Player.localPlayer.CmdUpdateNameAndIcon(Player.localPlayer.gameObject, playerName, playerIcon.texture.ToPixels());
+            Player.localPlayer.CmdUpdateNameAndIcon(Player.localPlayer.gameObject, playerName, playerIcon.ToPixels());
 
             connectCanvas.SetActive(true);
         }

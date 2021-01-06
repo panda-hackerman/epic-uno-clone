@@ -67,5 +67,15 @@ namespace Convert
 
             return texture;
         }
+
+        public static Texture2D ChangeFormat(this Texture2D InputTexture, TextureFormat NewFormat) //Converts texture into a format
+        {
+            Texture2D newTexture = new Texture2D(InputTexture.width, InputTexture.height, NewFormat, false);
+
+            newTexture.SetPixels(InputTexture.GetPixels());
+            newTexture.Apply();
+
+            return newTexture;
+        }
     }
 }
