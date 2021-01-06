@@ -51,7 +51,7 @@ public class UnoInputManager : NetworkBehaviour
     [Command]
     public void CmdAddCardToDiscard(int id)
     {
-/*        GameObject newCard = Instantiate(gameManager.drawPile[id].prefab);
+        /* GameObject newCard = Instantiate(gameManager.drawPile[id].prefab);
         Destroy(newCard.GetComponent<Collider>());
         newCard.GetComponent<Card>().ID = id;
 
@@ -60,7 +60,7 @@ public class UnoInputManager : NetworkBehaviour
         newCard.transform.position = new Vector3(0f.GiveOrTake(0.1f), 0.01f, 0f.GiveOrTake(0.1f));
         newCard.transform.eulerAngles = new Vector3(90, 0, Random.Range(0f, 360f));
         gameManager.discardPile.Add(newCard);
-        gameManager.UpdateDiscardPile();*/
+        gameManager.UpdateDiscardPile(); */
     }
 
     public void OnSelect()

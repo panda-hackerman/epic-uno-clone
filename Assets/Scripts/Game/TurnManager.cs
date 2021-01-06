@@ -31,7 +31,7 @@ public class TurnManager : NetworkBehaviour
 
     public void GameStart() //When the game start
     {
-        //TODO: Deal cards
+        //TODO: Add card to middle when game starts
         Debug.Log("The game has started!");
 
         foreach (Player player in players)
@@ -40,7 +40,6 @@ public class TurnManager : NetworkBehaviour
 
             for (int i = 0; i < 8; i++)
             {
-                Debug.Log($"{i}...");
                 DealCard(player);
             }
         }

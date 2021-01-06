@@ -17,11 +17,10 @@ public abstract class Card : NetworkBehaviour
     public bool isSelected;
     public int sortingOrder;
 
-    public void Start() { }
+    public Vector3 defaultPos = new Vector3(0, 1.75f, 0);
 
     private void Update()
     {
-        Vector3 defaultPos = new Vector3(0, 1.75f, 0);
         spriteRenderer.transform.localPosition = defaultPos;
 
         if (isSelected)

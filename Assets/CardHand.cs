@@ -5,7 +5,6 @@ using AdvacedMathStuff;
 
 /* Handles positioning of cards, also can show the arc as a line
  * if drawCards is enabled. This script runs in the editor. */
-//TODO: Maybe add an option to use a Cubic bezier (4 points)
 
 [ExecuteAlways]
 [RequireComponent(typeof(LineRenderer))]

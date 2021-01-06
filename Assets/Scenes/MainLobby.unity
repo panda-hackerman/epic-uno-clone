@@ -7455,8 +7455,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   output: {fileID: 824390351}
-  resX: 70
-  resY: 70
+  resX: 90
+  resY: 90
 --- !u!114 &1118905302
 MonoBehaviour:
   m_ObjectHideFlags: 0

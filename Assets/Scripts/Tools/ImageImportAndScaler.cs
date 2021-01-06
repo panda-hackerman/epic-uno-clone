@@ -4,6 +4,7 @@ using UnityEngine.Networking;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Convert;
 using SFB;
 
 public class ImageImportAndScaler : MonoBehaviour, IPointerDownHandler
@@ -40,12 +41,10 @@ public class ImageImportAndScaler : MonoBehaviour, IPointerDownHandler
         yield return www.SendWebRequest();
         // I am the image
         Texture2D newTexture = DownloadHandlerTexture.GetContent(www);
-        // change resolution and texture format
+        // change resolution
         TextureScale.Bilinear(newTexture, resX, resY); 
-        TextureFormat newTextureFormat = TextureFormat.RGB565;
-        Convert.Converter.ChangeFormat(newTexture, newTextureFormat);
         // its ourrr image
-        output.texture = newTexture;
+        output.texture = newTexture.ChangeFormat(TextureFormat.RGB565);
     }
 }
 

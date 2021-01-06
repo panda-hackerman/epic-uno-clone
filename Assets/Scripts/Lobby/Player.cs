@@ -65,6 +65,7 @@ namespace Lobby
             Card card = newCard.GetComponent<Card>();
 
             card.OnCardDrawn();
+            card.ID = id;
 
             cardIDs.Add(id);
             cardObjs.Add(card);

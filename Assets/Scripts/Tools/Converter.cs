@@ -68,7 +68,7 @@ namespace Convert
             return texture;
         }
 
-        public static Texture2D ChangeFormat(this Texture2D InputTexture, TextureFormat NewFormat) //Converts texture into a format
+        public static Texture2D ChangeFormat(this Texture2D InputTexture, TextureFormat NewFormat) //Converts texture into a texture of a new format
         {
             Texture2D newTexture = new Texture2D(InputTexture.width, InputTexture.height, NewFormat, false);
 

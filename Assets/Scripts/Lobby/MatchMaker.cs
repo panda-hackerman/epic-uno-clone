@@ -4,6 +4,9 @@ using UnityEngine;
 using Mirror;
 using Convert;
 
+[System.Serializable]
+public class SyncListGameObject : SyncList<GameObject> { } //Sync for a list of gameobjects
+
 namespace Lobby
 {
     [System.Serializable]
@@ -21,9 +24,6 @@ namespace Lobby
 
         public SyncListGameObject players = new SyncListGameObject(); //List of all the players in this match
     }
-
-    [System.Serializable]
-    public class SyncListGameObject : SyncList<GameObject> { } //Sync for a list of gameobjects
 
     [System.Serializable]
     public class SyncListMatch : SyncList<Match> { } //Sync for a list of matches
