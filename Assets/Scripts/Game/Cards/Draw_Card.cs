@@ -1,11 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Mirror;
+﻿using UnityEngine;
 
-public class Draw_Card : WildCard
+public class Draw_Card : Card
 {
-    public int cardsToDraw = 4;
+    public int cardsToDraw = 2;
 
     public override void OnCardDrawn()
     {
@@ -14,7 +11,7 @@ public class Draw_Card : WildCard
 
     public override void OnCardPlayed()
     {
-        if (wildCard)
-            base.OnCardPlayed();
+        Player.networkInterface.Plus(cardsToDraw);
+        Player.networkInterface.NextTurn();
     }
 }

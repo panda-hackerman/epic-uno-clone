@@ -12,12 +12,11 @@ public abstract class Card : NetworkBehaviour
     public int ID = -1;
 
     public bool wildCard = false;
-    public bool callNextTurn = true;
 
     public bool isSelected;
     public int sortingOrder;
 
-    public Vector3 defaultPos = new Vector3(0, 1.75f, 0);
+    [SyncVar] public Vector3 defaultPos = new Vector3(0, 1.75f, 0);
 
     private void Update()
     {
@@ -40,10 +39,9 @@ public abstract class Card : NetworkBehaviour
         Debug.Log($"Drew card '{name}'");
     }
 
-    public virtual void OnCardPlayed()
+    public virtual void OnCardPlayed() 
     {
-        // Called when this card is discarded
-        Debug.Log($"Played card '{name}'");
+        Player.networkInterface.NextTurn();
     }
 
     #region READ_ONLY

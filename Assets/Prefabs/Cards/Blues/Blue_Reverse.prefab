@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 5943688538762430065}
   - component: {fileID: 6479715032850828878}
   - component: {fileID: 1840424920908214371}
+  - component: {fileID: 1155199322880061963}
   m_Layer: 8
   m_Name: Blue_Reverse
   m_TagString: Untagged
@@ -146,13 +147,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
-  syncInterval: 0.1
+  syncInterval: 0
   type: 3
   ID: -1
   wildCard: 0
-  callNextTurn: 1
+  callNextTurn: 0
   isSelected: 0
   sortingOrder: 0
+  defaultPos: {x: 0, y: 1.75, z: 0}
 --- !u!65 &6479715032850828878
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -180,7 +182,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0
-  clientAuthority: 1
+  clientAuthority: 0
   localPositionSensitivity: 0.01
   localRotationSensitivity: 0.01
   localScaleSensitivity: 0.01
+--- !u!114 &1155199322880061963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6201474205725887985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1020a74962faada4b807ac5dc053a4cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0
+  currentMatchDebug: 

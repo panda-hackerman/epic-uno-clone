@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Mirror;
+﻿using UnityEngine;
 
 public class ReverseCard : Card
 {
@@ -12,8 +9,7 @@ public class ReverseCard : Card
 
     public override void OnCardPlayed()
     {
-        base.OnCardPlayed();
+        Player.networkInterface.Reverse();
+        Player.networkInterface.NextTurn();
     }
-
-    //TODO: Reverse
 }

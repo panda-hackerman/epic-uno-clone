@@ -10,6 +10,7 @@ using SFB;
 public class ImageImportAndScaler : MonoBehaviour, IPointerDownHandler
 {
     //Put cool image you want to change in the inspector
+    public Toggle toggle; //optional
     public RawImage output;
     public int resX = 70;
     public int resY = 70;
@@ -36,15 +37,15 @@ public class ImageImportAndScaler : MonoBehaviour, IPointerDownHandler
 
     private IEnumerator OutputRoutine(string url)
     {
-        // Gimmeh that image
-        UnityWebRequest www = UnityWebRequestTexture.GetTexture(url);
+        UnityWebRequest www = UnityWebRequestTexture.GetTexture(url); // Gimmeh that image
         yield return www.SendWebRequest();
-        // I am the image
-        Texture2D newTexture = DownloadHandlerTexture.GetContent(www);
-        // change resolution
-        TextureScale.Bilinear(newTexture, resX, resY); 
-        // its ourrr image
-        output.texture = newTexture.ChangeFormat(TextureFormat.RGB565);
+        
+        Texture2D newTexture = DownloadHandlerTexture.GetContent(www); // I am the image
+        TextureScale.Bilinear(newTexture, resX, resY); // Change resolution
+        
+        output.texture = newTexture.ChangeFormat(TextureFormat.RGB565); // It's ourrr image
+
+        if (toggle) toggle.isOn = true; //Select it
     }
 }
 

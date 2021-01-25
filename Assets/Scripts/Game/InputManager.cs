@@ -3,25 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Lobby;
+using Mirror;
+using Convert;
+using AdvacedMathStuff;
 
-public class InputManager : MonoBehaviour
+public class InputManager : NetworkBehaviour
 {
-    public bool getSelection = true; //TODO: No need to get the player's selected card if it isn't their turn
+    public bool getSelection = false; //TODO: No need to get the player's selected card if it isn't their turn
 
     private GameObject selection;
     private Card selectedCard
     {
         get
         {
-            if (!selection) return null;
-            if (selection.TryGetComponent(out Card card))
+            if (selection && selection.TryGetComponent(out Card card))
                 return card;
             else return null;
         }
     }
 
+    private bool selectedDraw { get { return selection && selection.CompareTag("DrawPile"); } }
+
     private Player player;
-    private Camera cam;
+    public Camera cam;
 
     private void Start()
     {
@@ -31,10 +35,13 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
-        if (getSelection)
+        if (!cam || !TurnManager.instance) return;
+        //getSelection = TurnManager.instance.currentPlayer == player.playerID;
+
+        if (getSelection) //Get selection will only be true when it is local player's turn
         {
             Vector2 mousePos = Mouse.current.position.ReadValue();
-            Ray ray = cam.ScreenPointToRay(mousePos); //TODO: Cache camera
+            Ray ray = cam.ScreenPointToRay(mousePos);
 
             if (Physics.Raycast(ray, out RaycastHit hit))
                 selection = hit.transform.gameObject;
@@ -52,31 +59,38 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    public void OnInit() //Runs when the match starts, called by player.css
+    public void OnInit() //Runs when the match starts
     {
+        Debug.Log("Hello");
         cam = GameObject.FindGameObjectWithTag("GameCamera").GetComponent<Camera>();
-        getSelection = true;
+
+        getSelection = TurnManager.instance.currentPlayer == player.playerID;
     }
 
     public void OnSelect() //Click!
     {
-        if (!selectedCard) return;
-
-        if (CanPlayCard(selectedCard))
-            DiscardPile.instance.Discard(selectedCard);
+        if (selectedCard)
+        {
+            if (CanPlayCard(selectedCard))
+                PlayCard(selectedCard);
+        }
+        else if (selectedDraw)
+        {
+            CmdDrawCard();
+        }
     }
 
     public bool CanPlayCard(Card card)
     {
-        if (DiscardPile.instance.CardCount == 0) //modCheck cards?
+        if (DiscardCount == 0) //modCheck cards?
             return true;
 
-        if (card is WildCard)
+        if (card.wildCard) //Wilds can play on anything
             return true;
 
-        Card topCard = DiscardPile.instance.TopCard;
+        Card topCard = DiscardTop; //Caching since TopCard uses get component
 
-        if (card is NumberedCard)
+        if (card is NumberedCard) //0-9?
         {
             if (topCard is NumberedCard)
             {
@@ -87,14 +101,13 @@ public class InputManager : MonoBehaviour
                     return true;
             }
         }
-        else
+        else //Not a numbered card or wild, but a reverse, skip, draw2, etc. 
         {
-            //TODO: C# 8.0, topCard is card.GetType()
-            if (topCard.GetType() == card.GetType()) //Both skips/ both reverses?
+            if (topCard.GetType() == card.GetType()) //Both skips/ both reverses, etc. ?
                 return true;
         }
 
-        if (card.type != 0) //Color
+        if (card.type != 0) //Color != misc, but yellow, red, etc.
         {
             if (card.type == topCard.type) //Same color?
                 return true;
@@ -102,4 +115,108 @@ public class InputManager : MonoBehaviour
 
         return false;
     }
+
+    #region PLAY CARD
+
+    public void PlayCard(Card card)
+    {
+        card.OnCardPlayed();
+
+        CmdDiscard(card.ID);
+
+        Destroy(card.gameObject);
+
+        getSelection = false;
+    }
+
+    [Command]
+    public void CmdDiscard(int id)
+    {
+        //Pos and rot
+        Vector3 position = new Vector3(0f.GiveOrTake(0.1f), 0.01f, 1f.GiveOrTake(0.1f));
+        Quaternion rotation = Quaternion.Euler(90, 0, Random.Range(0f, 360f));
+
+        GameObject newCard = Instantiate(player.deck.cards[id], position, rotation); //Creation
+
+        if (newCard.TryGetComponent(out Collider col))
+            Destroy(col);
+
+        newCard.GetComponent<Card>().defaultPos = Vector3.zero;
+
+        newCard.GetComponent<NetworkMatchChecker>().matchId = player.matchID.ToGuid();
+        NetworkServer.Spawn(newCard.gameObject); //Spawn it on the server
+
+        TurnManager.instance.discard.Insert(0, newCard.gameObject); //Add it to the discard list
+
+        //Remove old cards
+        if (DiscardCount > 10)
+        {
+            GameObject oldestCard = DiscardBottom.gameObject;
+
+            TurnManager.instance.discard.Remove(oldestCard);
+            TurnManager.instance.cardNums[id]++;
+
+            Destroy(oldestCard);
+        }
+
+        //Update sprite sorting order
+        for (int i = 0; i < DiscardCount; i++)
+        {
+            RpcSetSortingOrder(TurnManager.instance.discard[i], i);
+        }
+    }
+
+    [ClientRpc]
+    public void RpcSetSortingOrder(GameObject gameObject, int index)
+    {
+        Card card = gameObject.GetComponent<Card>();
+
+        card.defaultPos = Vector3.zero;
+
+        card.spriteRenderer.sortingLayerName = "DiscardPile";
+        card.sortingOrder = DiscardCount - index;
+    }
+
+    public void SetMyTurn(bool value)
+    {
+        TargetSetMyTurn(value);
+    }
+
+    [TargetRpc]
+    private void TargetSetMyTurn(bool value)
+    {
+        getSelection = value;
+    }
+
+    #endregion
+
+    [Command]
+    public void CmdDrawCard()
+    {
+        TurnManager.instance.DealCard(player);
+    }
+
+    #region READ_ONLY
+
+    public int DiscardCount { get { return TurnManager.instance.discard.Count; } }
+    public Card DiscardTop
+    {
+        get
+        {
+            if (TurnManager.instance.discard[0].TryGetComponent(out Card card))
+                return card;
+            else return null;
+        }
+    }
+    public Card DiscardBottom
+    {
+        get
+        {
+            if (TurnManager.instance.discard[DiscardCount - 1].TryGetComponent(out Card card))
+                return card;
+            else return null;
+        }
+    }
+
+    #endregion
 }

@@ -102,7 +102,7 @@ public class UnoInputManager : NetworkBehaviour
         }
 
         selectedCard.OnCardPlayed(); //You've been played! B)
-        if (selectedCard.callNextTurn) CmdNextTurn();
+        //if (selectedCard.callNextTurn) CmdNextTurn();
 
         //Get out of my hand and into the discard pile
         playerManager.physicalCards.Remove(selectedCard);

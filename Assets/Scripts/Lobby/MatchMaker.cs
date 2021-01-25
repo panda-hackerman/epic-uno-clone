@@ -81,7 +81,7 @@ namespace Lobby
             }
             else
             {
-                Debug.Log("Match ID does not exist"); //TODO: Maybe tell the player this through a pop up or error.
+                Debug.Log("Match ID does not exist"); //TODO: Maybe tell the player this through a pop up thingy.
                 return false;
             }
         }

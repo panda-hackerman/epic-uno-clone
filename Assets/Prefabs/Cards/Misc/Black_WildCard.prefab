@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -6144266954406246360}
   - component: {fileID: 1702585224}
   - component: {fileID: 4288860048190053836}
+  - component: {fileID: -5577722011136347324}
   m_Layer: 8
   m_Name: Black_WildCard
   m_TagString: Untagged
@@ -77,17 +78,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
-  syncInterval: 0.1
+  syncInterval: 0
   type: 0
   ID: 1
   wildCard: 1
   callNextTurn: 0
   isSelected: 0
   sortingOrder: 0
+  defaultPos: {x: 0, y: 1.75, z: 0}
   yellowSprite: {fileID: 6557062240801209029, guid: 6ae68e99df4eba44e880244a08781788, type: 3}
   redSprite: {fileID: 8376944580718283380, guid: 6ae68e99df4eba44e880244a08781788, type: 3}
   blueSprite: {fileID: 5054070583011151089, guid: 6ae68e99df4eba44e880244a08781788, type: 3}
   greenSprite: {fileID: 1149081486785994572, guid: 6ae68e99df4eba44e880244a08781788, type: 3}
+  cardsToDraw: 0
 --- !u!114 &4288860048190053836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,10 +105,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0
-  clientAuthority: 1
+  clientAuthority: 0
   localPositionSensitivity: 0.01
   localRotationSensitivity: 0.01
   localScaleSensitivity: 0.01
+--- !u!114 &-5577722011136347324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500137167884633502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1020a74962faada4b807ac5dc053a4cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0
+  currentMatchDebug: 
 --- !u!1 &1017574091543072335
 GameObject:
   m_ObjectHideFlags: 0

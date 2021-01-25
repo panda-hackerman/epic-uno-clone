@@ -131,5 +131,10 @@ namespace Lobby
 
             connectCanvas.SetActive(true);
         }
+
+        public void Copy()
+        {
+            matchIdText.text.CopyToClipboard();
+        }
     }
 }

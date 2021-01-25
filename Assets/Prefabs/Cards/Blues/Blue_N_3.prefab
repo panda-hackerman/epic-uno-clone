@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 6983558986612021141}
   - component: {fileID: 7897266438709709973}
   - component: {fileID: 3314274629102580408}
+  - component: {fileID: -7623414467841698577}
   m_Layer: 8
   m_Name: Blue_N_3
   m_TagString: Untagged
@@ -146,13 +147,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
-  syncInterval: 0.1
+  syncInterval: 0
   type: 3
   ID: 2
   wildCard: 0
   callNextTurn: 1
   isSelected: 0
   sortingOrder: 0
+  defaultPos: {x: 0, y: 1.75, z: 0}
   cardValue: 3
 --- !u!65 &7897266438709709973
 BoxCollider:
@@ -181,7 +183,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0
-  clientAuthority: 1
+  clientAuthority: 0
   localPositionSensitivity: 0.01
   localRotationSensitivity: 0.01
   localScaleSensitivity: 0.01
+--- !u!114 &-7623414467841698577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7089831773105229610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1020a74962faada4b807ac5dc053a4cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0
+  currentMatchDebug: 

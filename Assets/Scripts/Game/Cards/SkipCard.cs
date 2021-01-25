@@ -13,12 +13,7 @@ public class SkipCard : Card
 
     public override void OnCardPlayed()
     {
-        base.OnCardPlayed();
+        Player.networkInterface.Skip();
     }
 
-    [Command]
-    void CmdSkipPlayer()
-    {
-        //TODO: Skip, maybe just call NextTurn() twice?
-    }
 }

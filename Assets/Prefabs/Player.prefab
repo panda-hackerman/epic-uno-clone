@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8422869883381595099}
   - component: {fileID: 7572997271806350901}
   - component: {fileID: 1199682852}
+  - component: {fileID: -6064215756352235253}
   - component: {fileID: -7642414604175262697}
   - component: {fileID: 4050813779283463773}
   m_Layer: 0
@@ -80,6 +81,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0
+  networkInterface: {fileID: -6064215756352235253}
+  inputManager: {fileID: 1199682852}
+  playerID: 0
   matchID: 
   username: 
   iconData:
@@ -91,6 +95,8 @@ MonoBehaviour:
   myHand: {fileID: 7442097205907124526}
   cardIDs: 
   cardObjs: []
+  gameUIPlayerPrefab: {fileID: 3432294693271273177, guid: 459e03ed371f188488c16c2f00ccde83, type: 3}
+  canvas: {fileID: 0}
 --- !u!114 &1199682852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -103,7 +109,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 630f3ab470436e7428c3df71f9589c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   getSelection: 1
+  cam: {fileID: 0}
+--- !u!114 &-6064215756352235253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771653876480804920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccbf2f2ccf1e7a848b90640da86d467f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
 --- !u!114 &-7642414604175262697
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Mirror;
+﻿using UnityEngine;
 
 public class WildCard : Card
 {
     public Sprite yellowSprite, redSprite, blueSprite, greenSprite;
+
+    public int cardsToDraw = 4;
 
     public override void OnCardDrawn()
     {
@@ -14,8 +13,32 @@ public class WildCard : Card
 
     public override void OnCardPlayed()
     {
-        base.OnCardPlayed();
+        CanvasInfo.canvas.chooseColorButtons.SetActive(true);
 
-        //myPlayer.chooseColorButtons.SetActive(true);
+        Player.networkInterface.Plus(cardsToDraw);
+    }
+
+    public void SetColor(CardType color)
+    {
+        type = color;
+
+        switch (color)
+        {
+            case CardType.yellow:
+                spriteRenderer.sprite = yellowSprite;
+                break;
+            case CardType.red:
+                spriteRenderer.sprite = redSprite;
+                break;
+            case CardType.blue:
+                spriteRenderer.sprite = blueSprite;
+                break;
+            case CardType.green:
+                spriteRenderer.sprite = greenSprite;
+                break;
+            default:
+                Debug.LogWarning("Invalid color");
+                break;
+        }
     }
 }

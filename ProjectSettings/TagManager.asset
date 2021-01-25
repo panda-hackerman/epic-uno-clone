@@ -9,6 +9,7 @@ TagManager:
   - Red
   - Yellow
   - GameCamera
+  - DrawPile
   layers:
   - Default
   - TransparentFX
@@ -54,4 +55,7 @@ TagManager:
     locked: 0
   - name: Debug
     uniqueID: 596043141
+    locked: 0
+  - name: UI
+    uniqueID: 3360905517
     locked: 0

@@ -31,8 +31,8 @@ public class PlayerManager : NetworkBehaviour
         cam.eulerAngles = cam.eulerAngles.Y(transform.eulerAngles.y); //Set the camera's Y rotation to mine
         cam.localPosition += new Vector3(0f, 4.5f, -4.5f); //Add the offset
 
-        chooseColorButtons = cam.GetComponent<CanvasInfo>().colorButtons;
-        chooseColorButtons.SetActive(false);
+        //chooseColorButtons = cam.GetComponent<CanvasInfo>().colorButtons;
+        //chooseColorButtons.SetActive(false);
 
         gameObject.name += " (Local Player)";
     }
