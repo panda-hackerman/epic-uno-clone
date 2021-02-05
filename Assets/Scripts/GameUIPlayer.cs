@@ -5,6 +5,7 @@ using Lobby;
 using UnityEngine.UI;
 using Convert;
 using Mirror;
+using TMPro;
 
 public class GameUIPlayer : NetworkBehaviour
 {
@@ -12,6 +13,7 @@ public class GameUIPlayer : NetworkBehaviour
 
     public RawImage image;
     public Text text;
+    public TMP_Text cardCount;
     public Outline outline;
 
     public NetworkMatchChecker networkMatchChecker;
@@ -49,5 +51,6 @@ public class GameUIPlayer : NetworkBehaviour
 
         gameUIPlayer.text.text = gameUIPlayer.player.username;
         gameUIPlayer.image.texture = gameUIPlayer.player.iconData.ToTexture();
+        gameUIPlayer.cardCount.text = gameUIPlayer.player.cardCount.ToString();
     }
 }

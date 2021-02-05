@@ -1,10 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Mirror;
-using Lobby;
 using AdvacedMathStuff;
-using Convert;
 
 /* There is one turn manager for every game going on, it handles whose turn
  * it is and all the players in the game.
@@ -12,14 +8,12 @@ using Convert;
 
 public class TurnManager : NetworkBehaviour
 {
-
     //Player stuff
     public SyncListGameObject players = new SyncListGameObject();
     [SyncVar] public int currentPlayer;
 
     //Draw pile
-    public SyncListInt cardNums = new SyncListInt() {
-        4, 4, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 };
+    public SyncListInt cardNums;
 
     //Discard pile
     public SyncListGameObject discard = new SyncListGameObject();
@@ -43,6 +37,9 @@ public class TurnManager : NetworkBehaviour
         //TODO: Add card to middle when game starts
         Debug.Log("The game has started!");
 
+        cardNums = new SyncListInt() {
+        4, 4, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 };
+
         for (int i = 0; i < players.Count; i++) //Evvvrybody
         {
             Player player = players[i].GetComponent<Player>();
@@ -57,13 +54,13 @@ public class TurnManager : NetworkBehaviour
         }
     }
 
-    public void GameEnd() //When the game ends
+    public void ContinueGame()
     {
-        //TODO: Make this called
-        //TODO: Unload game scene
-        //TODO: Remove match from matchID if lobby closed
-        //TODO: Delete this object/ reset?
-        Debug.Log("The game has ended!");
+        foreach (GameObject playerObj in players)
+        {
+            Player player = playerObj.GetComponent<Player>();
+            player.UnloadGame();
+        }
     }
 
     public void DealCard(Player player)
@@ -91,7 +88,7 @@ public class TurnManager : NetworkBehaviour
 
         Debug.Log($"It is now Player {currentPlayer}'s turn");
 
-        RpcSetTurnDisplay(currentPlayer);
+        SetTurnDisplay(currentPlayer);
 
         players[currentPlayer].GetComponent<InputManager>().SetMyTurn(true); //Tell the player they are now able to select cards
     }
@@ -120,15 +117,13 @@ public class TurnManager : NetworkBehaviour
 
         Debug.Log($"Skipped Player {skippedPlayer}, it is now Player {currentPlayer}'s turn");
 
-        RpcSetTurnDisplay(currentPlayer);
+        SetTurnDisplay(currentPlayer);
 
         players[currentPlayer].GetComponent<InputManager>().SetMyTurn(true);
     }
 
     public void Plus(int count)
     {
-        Debug.Log("Plus !!!!!!!!!!");
-
         if (count <= 0) return;
 
         int upperBound = players.Count - 1;
@@ -146,7 +141,6 @@ public class TurnManager : NetworkBehaviour
 
         for (int i = 0; i < count; i++)
         {
-            Debug.Log($"Run {i} times :)");
             DealCard(player);
         }
     }
@@ -161,10 +155,38 @@ public class TurnManager : NetworkBehaviour
         }
     }
 
-    [ClientRpc]
-    public void RpcSetTurnDisplay(int player)
+    public void SetTurnDisplay(int playerNum) //Display at the top to indicate whose turn it is
     {
-        CanvasInfo.canvas.SetPlayerTurn(player);
+        foreach (GameObject gameObj in players)
+        {
+            NetworkingInterface player = gameObj.GetComponent<NetworkingInterface>();
+
+            player.TargetSetTurnDisplay(playerNum);
+        }
+    }
+
+    public void UpdateCardCount()
+    {
+        foreach (GameObject mainObj in players) //We will run the TargetRpc on every player
+        {
+            NetworkingInterface mainPlayer = mainObj.GetComponent<NetworkingInterface>(); //Player that the TargetRpc will be called on
+
+            foreach (GameObject targetObj in players) //Update the card count for all of these players
+            {
+                Player targetPlayer = targetObj.GetComponent<Player>();
+                mainPlayer.TargetSetCardCount(targetObj, targetPlayer.cardCount);
+            }
+        }
+    }
+
+    public void DeclareWinner(string winnerName)
+    {
+        foreach (GameObject playerObject in players)
+        {
+            Player player = playerObject.GetComponent<Player>();
+
+            player.TargetDeclareWinner(winnerName);
+        }
     }
 
 }

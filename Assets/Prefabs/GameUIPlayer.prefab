@@ -97,6 +97,7 @@ MonoBehaviour:
   player: {fileID: 0}
   image: {fileID: 3432294694092873657}
   text: {fileID: 3432294694090271330}
+  cardCount: {fileID: 3432294693571417391}
   outline: {fileID: 3432294694092873662}
   networkMatchChecker: {fileID: 6032738214437987307}
 --- !u!114 &657576042352296865

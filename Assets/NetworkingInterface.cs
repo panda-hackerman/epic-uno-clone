@@ -22,6 +22,12 @@ public class NetworkingInterface : NetworkBehaviour
         TurnManager.instance.NextTurn();
     }
 
+    [TargetRpc]
+    public void TargetSetTurnDisplay(int player)
+    {
+        UIGame.instance.SetPlayerTurn(player);
+    }
+
     [Command]
     private void CmdSkip()
     {
@@ -63,9 +69,14 @@ public class NetworkingInterface : NetworkBehaviour
     }
 
     [TargetRpc]
-    private void TargetSetReverse(bool value)
+    private void TargetSetReverse(bool value) //Reverses or unreverses the game
     {
-        CanvasInfo.canvas.arrow.SetReverse(value);
-        Debug.Log($"Set reverse to {value}");
+        UIGame.instance.arrow.SetReverse(value);
+    }
+
+    [TargetRpc]
+    public void TargetSetCardCount(GameObject player, int count)
+    {
+        UIGame.instance.SetCardCount(player.GetComponent<Player>(), count);
     }
 }

@@ -9,7 +9,7 @@ using AdvacedMathStuff;
 
 public class InputManager : NetworkBehaviour
 {
-    public bool getSelection = false; //TODO: No need to get the player's selected card if it isn't their turn
+    public bool getSelection = false;
 
     private GameObject selection;
     private Card selectedCard
@@ -122,8 +122,10 @@ public class InputManager : NetworkBehaviour
     {
         card.OnCardPlayed();
 
-        CmdDiscard(card.ID);
+        player.RemoveCardAt(player.cardObjs.IndexOf(card));
+        player.cardObjs.Remove(card);
 
+        CmdDiscard(card.ID);
         Destroy(card.gameObject);
 
         getSelection = false;

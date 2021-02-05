@@ -25,21 +25,22 @@ public class Player : NetworkBehaviour
     NetworkMatchChecker networkMatchChecker; //Guid goes here
 
     [Header("Info")]
+    [SyncVar] public bool isHost; //TODO: Less oportunity for this to break if the host is stored as in the turn manager or better, the Match class. 
     [SyncVar] public int playerID;
     [SyncVar] public string matchID;
     [SyncVar] public string username;
-    [HideInInspector]
-    [SyncVar] public ImageData iconData; //Raw bytes of image because mirror amirite
+    [SyncVar, HideInInspector]
+    public ImageData iconData; //Raw bytes of image because mirror amirite
 
     [Header("Card shit")]
     public UneDeck deck; //List of card prefabs
     public CardHand myHand;
-    public List<int> cardIDs = new List<int>(); //Ids of cards in my hand
+    [SyncVar] public int cardCount;
+    private List<int> cardIDs = new List<int>(); //List of ids that represent the player's cards
     public List<Card> cardObjs = new List<Card>(); //Physical card objs (local only)
 
     [Header("Misc")]
     public GameObject gameUIPlayerPrefab;
-    public CanvasInfo canvas;
 
     private void Start()
     {
@@ -49,7 +50,7 @@ public class Player : NetworkBehaviour
         if (isLocalPlayer)
         {
             localPlayer = this; //Finding myself
-            networkInterface = this.GetComponent<NetworkingInterface>();
+            networkInterface = GetComponent<NetworkingInterface>();
             name = $"Local Player";
         }
         else
@@ -68,6 +69,18 @@ public class Player : NetworkBehaviour
         myHand.gameObject.SetActive(true);
     }
 
+    public void AddCard(int value)
+    {
+        cardIDs.Add(value);
+        CmdSetCardCount(cardIDs.Count);
+    }
+
+    public void RemoveCardAt(int index)
+    {
+        cardIDs.RemoveAt(index);
+        CmdSetCardCount(cardIDs.Count);
+    }
+
     public void DealCard(int id)
     {
         TargetAddCard(id);
@@ -83,7 +96,7 @@ public class Player : NetworkBehaviour
         card.OnCardDrawn();
         card.ID = id;
 
-        cardIDs.Add(id);
+        AddCard(id);
         cardObjs.Add(card);
     }
 
@@ -95,6 +108,20 @@ public class Player : NetworkBehaviour
         _player.username = username;
         _player.iconData = icon;
 
+    }
+
+    [Command]
+    public void CmdSetCardCount(int value)
+    {
+        cardCount = value;
+        TurnManager.instance.UpdateCardCount();
+        Debug.Log($"CardCount is now {value}!");
+
+        //Declare le winner
+        if (value <= 0) //This means this player has won; <= not == just incase I guess
+        {
+            TurnManager.instance.DeclareWinner(username);
+        }
     }
 
     #region HOST
@@ -114,6 +141,8 @@ public class Player : NetworkBehaviour
             Debug.Log($"Game hosted succesfully with ID {matchID}");
             networkMatchChecker.matchId = matchID.ToGuid();
             TargetHostGame(true, matchID); //Successfully hosted the game
+
+            isHost = true;
         }
         else
         {
@@ -147,6 +176,8 @@ public class Player : NetworkBehaviour
             Debug.Log($"Game joined succesfully with ID {matchID}");
             networkMatchChecker.matchId = matchID.ToGuid();
             TargetJoinGame(true, matchID); //Successfully joined the game
+
+            isHost = false;
         }
         else
         {
@@ -171,8 +202,8 @@ public class Player : NetworkBehaviour
         CmdBeginGame();
     }
 
-    [Command] //Runs on the host
-    void CmdBeginGame() //Start the game on the host
+    [Command] //Runs on the server
+    void CmdBeginGame() //Start the game on the server
     {
         MatchMaker.instance.BeginGame(matchID);
         Debug.Log("Beginning game");
@@ -209,6 +240,57 @@ public class Player : NetworkBehaviour
         SceneManager.MoveGameObjectToScene(TurnManager.instance.gameObject, SceneManager.GetSceneByName("MainGame"));
 
         localPlayer.Init();
+    }
+
+    #endregion
+
+    #region END_GAME
+
+    [TargetRpc]
+    public void TargetDeclareWinner(string winnerName)
+    {
+        UIGame.instance.DeclareWinnerSuccess(winnerName, isHost);
+        inputManager.getSelection = false;
+    }
+
+    public void ContinueGame()
+    {
+        CmdContinueGame();
+    }
+
+    [Command]
+    public void CmdContinueGame()
+    {
+        TurnManager.instance.ContinueGame();
+        Debug.Log("Telling tm to continue...");
+    }
+
+    public void UnloadGame()
+    {
+        TargetUnloadGame();
+    }
+
+    [TargetRpc]
+    public void TargetUnloadGame()
+    {
+        foreach (Card card in cardObjs)
+            Destroy(card.gameObject);
+
+        cardObjs.Clear();
+        cardIDs.Clear();
+
+        StartCoroutine(AsyncUnloadGame());
+    }
+
+    IEnumerator AsyncUnloadGame()
+    {
+        AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync("MainGame");
+
+        while (!asyncUnload.isDone)
+        {
+            Debug.Log("Unloading scene...");
+            yield return null;
+        }
     }
 
     #endregion

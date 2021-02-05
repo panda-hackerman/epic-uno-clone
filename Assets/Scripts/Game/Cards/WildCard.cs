@@ -13,7 +13,7 @@ public class WildCard : Card
 
     public override void OnCardPlayed()
     {
-        CanvasInfo.canvas.chooseColorButtons.SetActive(true);
+        UIGame.instance.chooseColorButtons.SetActive(true);
 
         Player.networkInterface.Plus(cardsToDraw);
     }
