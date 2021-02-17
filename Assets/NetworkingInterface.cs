@@ -1,7 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 using Mirror;
+using Lobby;
 
 /* This script handles interfacing with the turnmanager and other networking stuff
  * since for some reason mirror gives an authority error if I call it on the turnmanager
@@ -15,6 +15,7 @@ public class NetworkingInterface : NetworkBehaviour
     public void Plus(int count) => CmdPlus(count);
     public void SetColor(CardType color) => CmdSetColor(color);
     public void Reverse() => CmdReverse();
+    public void LeaveMatch(Player player, GameObject turnmanager = null) => CmdLeaveMatch(player.gameObject, turnmanager);
 
     [Command]
     private void CmdNextTurn()
@@ -78,5 +79,14 @@ public class NetworkingInterface : NetworkBehaviour
     public void TargetSetCardCount(GameObject player, int count)
     {
         UIGame.instance.SetCardCount(player.GetComponent<Player>(), count);
+    }
+
+    [Command]
+    private void CmdLeaveMatch(GameObject player, GameObject turnmanager)
+    {
+        if (turnmanager == null)
+            MatchMaker.instance.LeaveMatch(player);
+        else
+            MatchMaker.instance.LeaveMatch(player, turnmanager.GetComponent<TurnManager>());
     }
 }

@@ -47,7 +47,7 @@ namespace Lobby
             instance = this;
         }
 
-        public bool HostGame(string matchID, GameObject player) //Self explanitory; attempt to host the game
+        public bool HostGame(string matchID, GameObject player) //Attempt to host the game
         {
             if (!matchIDs.Contains(matchID))
             {
@@ -67,15 +67,9 @@ namespace Lobby
         {
             if (matchIDs.Contains(matchID))
             {
-                for (int i = 0; i < matches.Count; i++)
-                {
-                    if (matches[i].matchID == matchID)
-                    {
-                        //TODO: Check if there are already 8 players in the lobby
-                        matches[i].players.Add(player);
-                        break;
-                    }
-                }
+                FindMatchByID(matchID, out Match match);
+                match.players.Add(player);
+
                 Debug.Log("Match joined");
                 return true;
             }
@@ -93,21 +87,82 @@ namespace Lobby
             newTurnManager.GetComponent<NetworkMatchChecker>().matchId = matchID.ToGuid();
             TurnManager turnManager = newTurnManager.GetComponent<TurnManager>();
 
-            for (int i = 0; i < matches.Count; i++)
-            {
-                if (matches[i].matchID == matchID) //Loop thru the matches and look for the one with a matching id
-                {
-                    foreach (GameObject player in matches[i].players) //Call this on every player
-                    {
-                        Player _player = player.GetComponent<Player>();
-                        turnManager.AddPlayer(_player);
-                        _player.StartGame(); //Tell the player to start the game. Loads the scene and other stuff.
-                    }
+            FindMatchByID(matchID, out Match match);
 
-                    turnManager.GameStart();
-                    break; //we found the right match so stop searching
+            foreach (GameObject playerObject in match.players) //Call this on every player
+            {
+                Player player = playerObject.GetComponent<Player>();
+                turnManager.AddPlayer(player);
+                player.StartGame(); //Tell the player to start the game. Loads the scene and other stuff.
+            }
+
+            turnManager.GameStart();
+        }
+
+        public bool LeaveMatch(GameObject playerObject, TurnManager turnmanager = null) //When a player wants to leave the match
+        {
+            if (!playerObject.TryGetComponent(out Player player))
+                throw new System.Exception("Couldn't find Player script of player object.");
+
+            if (!FindMatchByID(player.matchID, out Match match))
+                throw new System.Exception("Couldn't find match");
+
+            if (turnmanager != null) //TurnManager will be null if the game scene is not loaded
+            {
+                turnmanager.players.RemoveAt(player.playerID);
+
+                //Reset the playerIDs
+                for (int i = 0; i < turnmanager.players.Count; i++)
+                    turnmanager.players[i].GetComponent<Player>().playerID = i;
+
+                //Turn goes to the next person if they leave on their turn
+                if (turnmanager.currentPlayer == player.playerID)
+                    turnmanager.NextTurn();
+
+                //We need a new host if the host leaves
+                if (player.isHost)
+                    turnmanager.players[0].GetComponent<Player>().isHost = true;
+            }
+
+            match.players.Remove(playerObject);
+
+            //Tell every other player that a player left (so they can update the display)
+            foreach (GameObject otherPlayerObj in match.players)
+            {
+                Player otherPlayer = otherPlayerObj.GetComponent<Player>();
+                otherPlayer.OtherPlayerLeft(player);
+            }
+
+            if (match.players.Count == 0) //This means there is no-one left in the match
+            {
+                Debug.Log($"Closing match | {player.matchID}");
+
+                matches.Remove(match);
+                matchIDs.Remove(match.matchID);
+            }
+
+            player.LeaveGame();
+
+            return true;
+        }
+
+        public bool FindMatchByID(string matchID, out Match match)
+        {
+            match = null;
+
+            if (matchIDs.Contains(matchID))
+            {
+                for (int i = 0; i < matches.Count; i++)
+                {
+                    if (matches[i].matchID == matchID)
+                    {
+                        match = matches[i];
+                        return true;
+                    }
                 }
             }
+
+            return false;
         }
 
         //Generate an ID for the match

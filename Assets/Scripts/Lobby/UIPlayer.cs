@@ -13,8 +13,8 @@ namespace Lobby
      */
     public class UIPlayer : NetworkBehaviour
     {
-        Player player;
-        NetworkMatchChecker networkMatchChecker;
+        private Player player;
+        private NetworkMatchChecker networkMatchChecker;
 
         public RawImage image;
         public Text text;
@@ -22,6 +22,11 @@ namespace Lobby
         private void Awake()
         {
             networkMatchChecker = GetComponent<NetworkMatchChecker>();
+        }
+
+        public Player GetPlayer()
+        {
+            return player;
         }
 
         public void SetPlayer(Player player)

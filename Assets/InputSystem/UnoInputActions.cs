@@ -25,6 +25,14 @@ public class @UnoInputActions : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""4f26d85b-db51-4999-ab4c-7a6fbefbdfc6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -36,6 +44,17 @@ public class @UnoInputActions : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard and Mouse"",
                     ""action"": ""Select"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d39ed716-446d-4e18-ad14-d0a71d0d660f"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -64,6 +83,7 @@ public class @UnoInputActions : IInputActionCollection, IDisposable
         // ActionMap
         m_ActionMap = asset.FindActionMap("ActionMap", throwIfNotFound: true);
         m_ActionMap_Select = m_ActionMap.FindAction("Select", throwIfNotFound: true);
+        m_ActionMap_Pause = m_ActionMap.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -114,11 +134,13 @@ public class @UnoInputActions : IInputActionCollection, IDisposable
     private readonly InputActionMap m_ActionMap;
     private IActionMapActions m_ActionMapActionsCallbackInterface;
     private readonly InputAction m_ActionMap_Select;
+    private readonly InputAction m_ActionMap_Pause;
     public struct ActionMapActions
     {
         private @UnoInputActions m_Wrapper;
         public ActionMapActions(@UnoInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Select => m_Wrapper.m_ActionMap_Select;
+        public InputAction @Pause => m_Wrapper.m_ActionMap_Pause;
         public InputActionMap Get() { return m_Wrapper.m_ActionMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -131,6 +153,9 @@ public class @UnoInputActions : IInputActionCollection, IDisposable
                 @Select.started -= m_Wrapper.m_ActionMapActionsCallbackInterface.OnSelect;
                 @Select.performed -= m_Wrapper.m_ActionMapActionsCallbackInterface.OnSelect;
                 @Select.canceled -= m_Wrapper.m_ActionMapActionsCallbackInterface.OnSelect;
+                @Pause.started -= m_Wrapper.m_ActionMapActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_ActionMapActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_ActionMapActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_ActionMapActionsCallbackInterface = instance;
             if (instance != null)
@@ -138,6 +163,9 @@ public class @UnoInputActions : IInputActionCollection, IDisposable
                 @Select.started += instance.OnSelect;
                 @Select.performed += instance.OnSelect;
                 @Select.canceled += instance.OnSelect;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -154,5 +182,6 @@ public class @UnoInputActions : IInputActionCollection, IDisposable
     public interface IActionMapActions
     {
         void OnSelect(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }

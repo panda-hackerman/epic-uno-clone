@@ -22,7 +22,7 @@ public class Player : NetworkBehaviour
     public static Player localPlayer; //me :)
     public static NetworkingInterface networkInterface; //Command shit goes here :)
     public InputManager inputManager;
-    NetworkMatchChecker networkMatchChecker; //Guid goes here
+    private NetworkMatchChecker networkMatchChecker; //Guid goes here
 
     [Header("Info")]
     [SyncVar] public bool isHost; //TODO: Less oportunity for this to break if the host is stored as in the turn manager or better, the Match class. 
@@ -293,6 +293,35 @@ public class Player : NetworkBehaviour
         }
     }
 
-    #endregion
+    public void LeaveGame()
+    {
+        networkMatchChecker.matchId = System.Guid.Empty;
+        matchID = string.Empty;
 
+        TargetLeaveGame();
+    }
+
+    [TargetRpc]
+    void TargetLeaveGame()
+    {
+        StartCoroutine(AsyncUnloadGame());
+    }
+
+    public void OtherPlayerLeft(Player player)
+    {
+        TargetOtherPlayerLeft(player.gameObject);
+    }
+
+    [TargetRpc]
+    void TargetOtherPlayerLeft(GameObject playerObject)
+    {
+        Player player = playerObject.GetComponent<Player>();
+
+        UILobby.instance.OtherPlayerLeft(player);
+
+        if (UIGame.instance)
+            UIGame.instance.OtherPlayerLeft(player);
+    }
+
+    #endregion
 }

@@ -36,9 +36,8 @@ public class InputManager : NetworkBehaviour
     private void Update()
     {
         if (!cam || !TurnManager.instance) return;
-        //getSelection = TurnManager.instance.currentPlayer == player.playerID;
 
-        if (getSelection) //Get selection will only be true when it is local player's turn
+        if (getSelection && !UIGame.instance.pauseMenuOpen) //Get selection will only be true when it is local player's turn
         {
             Vector2 mousePos = Mouse.current.position.ReadValue();
             Ray ray = cam.ScreenPointToRay(mousePos);
@@ -69,15 +68,23 @@ public class InputManager : NetworkBehaviour
 
     public void OnSelect() //Click!
     {
-        if (selectedCard)
+        if (TurnManager.instance && TurnManager.instance.currentPlayer == player.playerID) //Checking just in case
         {
-            if (CanPlayCard(selectedCard))
-                PlayCard(selectedCard);
+            if (selectedCard)
+            {
+                if (CanPlayCard(selectedCard))
+                    PlayCard(selectedCard);
+            }
+            else if (selectedDraw)
+            {
+                CmdDrawCard();
+            }
         }
-        else if (selectedDraw)
-        {
-            CmdDrawCard();
-        }
+    }
+
+    public void OnPause() //Esc!
+    {
+        UIGame.instance.TogglePause();
     }
 
     public bool CanPlayCard(Card card)

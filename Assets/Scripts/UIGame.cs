@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Convert;
 using UnityEngine.UI;
+using Lobby;
 
 [System.Serializable]
 public class Arrow //(you can collapse this)
@@ -50,6 +51,9 @@ public class UIGame : MonoBehaviour
     public Transform playerDisplay;
     public GameObject chooseColorButtons;
 
+    public GameObject pauseMenu;
+    [HideInInspector] public bool pauseMenuOpen = false;
+
     [Header("Win state panel stuff")]
     public GameObject winStatePanel;
     public Text playerWonText;
@@ -64,6 +68,11 @@ public class UIGame : MonoBehaviour
     public void Continue()
     {
         Player.localPlayer.ContinueGame();
+    }
+
+    public void ExitMatch()
+    {
+        UILobby.instance.ExitMatch();
     }
 
     public void SetCardColor(int color) //Actived by button push
@@ -125,5 +134,37 @@ public class UIGame : MonoBehaviour
 
         gameUiPlayer.SetPlayer(player);
         gameUiPlayer.networkMatchChecker.matchId = player.matchID.ToGuid();
+    }
+
+    public void OtherPlayerLeft(Player player)
+    {
+        foreach (Transform transform in gameUiPlayerParent)
+        {
+            GameUIPlayer gameUIPlayer = transform.GetComponent<GameUIPlayer>();
+
+            if (gameUIPlayer.player == player)
+            {
+                Destroy(gameUIPlayer.gameObject);
+                break;
+            }
+        }
+    }
+
+    public void TogglePause()
+    {
+        if (pauseMenuOpen) ClosePause();
+        else OpenPause();
+    }
+
+    public void OpenPause()
+    {
+        pauseMenu.SetActive(true);
+        pauseMenuOpen = true;
+    }
+
+    public void ClosePause()
+    {
+        pauseMenu.SetActive(false);
+        pauseMenuOpen = false;
     }
 }

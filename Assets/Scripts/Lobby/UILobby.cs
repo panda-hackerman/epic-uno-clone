@@ -104,11 +104,29 @@ namespace Lobby
             newUIPlayer.GetComponent<UIPlayer>().SetPlayer(player);
         }
 
-        #endregion
-
         public void BeginGame()
         {
             Player.localPlayer.BeginGame();
+        }
+
+        #endregion
+
+        public void ExitMatch()
+        {
+            if (!TurnManager.instance) //The turnmanager will not exist if we are only in the lobby
+                Player.networkInterface.LeaveMatch(Player.localPlayer);
+            else
+                Player.networkInterface.LeaveMatch(Player.localPlayer, TurnManager.instance.gameObject);
+
+            lobbyCanvas.enabled = false;
+            joinMatchInput.interactable = true;
+            joinButton.interactable = true;
+            hostButton.interactable = true;
+
+            foreach (Transform item in UIPlayerParent) //Clear display
+            {
+                Destroy(item.gameObject);
+            }
         }
 
         public void ChangeName(string input)
@@ -124,9 +142,6 @@ namespace Lobby
 
         public void SubmitNameAndIcon()
         {
-            Player.localPlayer.username = playerName;
-            //Player.localPlayer.iconData = playerIcon.texture.ToPixels();
-
             Player.localPlayer.CmdUpdateNameAndIcon(Player.localPlayer.gameObject, playerName, playerIcon.ToPixels());
 
             connectCanvas.SetActive(true);
@@ -135,6 +150,20 @@ namespace Lobby
         public void Copy()
         {
             matchIdText.text.CopyToClipboard();
+        }
+
+        public void OtherPlayerLeft(Player player)
+        {
+            foreach (Transform transform in UIPlayerParent)
+            {
+                UIPlayer uiPlayer = transform.GetComponent<UIPlayer>();
+
+                if (uiPlayer.GetPlayer() == player)
+                {
+                    Destroy(uiPlayer.gameObject);
+                    break;
+                }
+            }
         }
     }
 }
