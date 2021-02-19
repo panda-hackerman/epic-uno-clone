@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Convert;
+using UnityEngine.SceneManagement;
 
 namespace Lobby
 {
@@ -166,6 +167,31 @@ namespace Lobby
                     Destroy(uiPlayer.gameObject);
                     break;
                 }
+            }
+        }
+
+        public void CloseConnectPanel()
+        {
+            connectCanvas.SetActive(false);
+        }
+
+        public void ExitToMainMenu()
+        {
+            if (UneNetworkManager.instance)
+            {
+                Destroy(UneNetworkManager.instance.gameObject);
+            }
+
+            StartCoroutine(LoadMainMenu());
+        }
+
+        IEnumerator LoadMainMenu()
+        {
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("MainMenu");
+
+            while (!asyncLoad.isDone)
+            {
+                yield return null;
             }
         }
     }

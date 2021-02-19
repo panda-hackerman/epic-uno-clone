@@ -6,6 +6,13 @@ using Lobby;
 
 public class UneNetworkManager : NetworkManager
 {
+    public static UneNetworkManager instance;
+
+    private void OnEnable()
+    {
+        instance = this;
+    }
+
     //Overridden to make sure the player leaves the match before the player object is destroyed
     public override void OnServerDisconnect(NetworkConnection conn)
     {
