@@ -12,6 +12,6 @@ public class Draw_Card : Card
     public override void OnCardPlayed()
     {
         Player.networkInterface.Plus(cardsToDraw);
-        Player.networkInterface.NextTurn();
+        Player.networkInterface.Skip();
     }
 }

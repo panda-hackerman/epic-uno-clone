@@ -61,11 +61,14 @@ namespace Lobby
                 matchIdText.text = matchID;
                 SpawnPlayerUIPrefab(Player.localPlayer); //Add me to the display
             }
-            else //Otherwise re-enable the buttons
+            else //Otherwise try again
             {
                 joinMatchInput.interactable = true;
                 joinButton.interactable = true;
                 hostButton.interactable = true;
+
+                Debug.Log("Trying again");
+                Host();
             }
         }
 

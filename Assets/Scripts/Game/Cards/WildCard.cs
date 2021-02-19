@@ -5,6 +5,7 @@ public class WildCard : Card
     public Sprite yellowSprite, redSprite, blueSprite, greenSprite;
 
     public int cardsToDraw = 4;
+    public bool skipPlayerNextTurn = true;
 
     public override void OnCardDrawn()
     {

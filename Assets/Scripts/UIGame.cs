@@ -77,10 +77,23 @@ public class UIGame : MonoBehaviour
 
     public void SetCardColor(int color) //Actived by button push
     {
-        Player.networkInterface.SetColor((CardType)color);
-        Player.networkInterface.NextTurn();
-
         chooseColorButtons.SetActive(false);
+
+        Player.networkInterface.SetColor((CardType)color);
+
+        if (TurnManager.instance.discard[0].TryGetComponent(out WildCard card))
+        {
+            if (card.skipPlayerNextTurn)
+                Player.networkInterface.Skip();
+            else
+                Player.networkInterface.NextTurn();
+        }
+        else
+        {
+            Debug.LogWarning("Top discard card isn't of type WildCard. This probably shouldn't have happened, but that's okay.", TurnManager.instance.discard[0]);
+            Player.networkInterface.NextTurn();
+        }
+
     }
 
     public void SetPlayerTurn(int playerNum)
@@ -88,7 +101,7 @@ public class UIGame : MonoBehaviour
         foreach (Transform child in playerDisplay)
         {
             if (child.TryGetComponent(out GameUIPlayer uiPlayer))
-                uiPlayer.outline.enabled = uiPlayer.player.playerID == playerNum;
+                uiPlayer.outline.SetActive(uiPlayer.player.playerID == playerNum);
         }
     }
 

@@ -84,7 +84,8 @@ public class InputManager : NetworkBehaviour
 
     public void OnPause() //Esc!
     {
-        UIGame.instance.TogglePause();
+        if (UIGame.instance)
+            UIGame.instance.TogglePause();
     }
 
     public bool CanPlayCard(Card card)
@@ -139,7 +140,7 @@ public class InputManager : NetworkBehaviour
     }
 
     [Command]
-    public void CmdDiscard(int id)
+    public void CmdDiscard(int id) //TODO: Might be able to move this over to the turn manager or something. 
     {
         //Pos and rot
         Vector3 position = new Vector3(0f.GiveOrTake(0.1f), 0.01f, 1f.GiveOrTake(0.1f));
@@ -153,7 +154,7 @@ public class InputManager : NetworkBehaviour
         newCard.GetComponent<Card>().defaultPos = Vector3.zero;
 
         newCard.GetComponent<NetworkMatchChecker>().matchId = player.matchID.ToGuid();
-        NetworkServer.Spawn(newCard.gameObject); //Spawn it on the server
+        NetworkServer.Spawn(newCard); //Spawn it on the server
 
         TurnManager.instance.discard.Insert(0, newCard.gameObject); //Add it to the discard list
 

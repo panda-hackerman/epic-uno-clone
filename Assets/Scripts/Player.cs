@@ -62,6 +62,8 @@ public class Player : NetworkBehaviour
 
     public void Init() //When the host starts the game
     {
+        Debug.Log("Init !!!", this);
+
         BroadcastMessage("OnInit");
 
         UIGame.instance.StartGameSuccess();
@@ -220,7 +222,7 @@ public class Player : NetworkBehaviour
     {
         Debug.Log($"Beginning game | {matchID}");
 
-        UILobby.instance.fallingCards.SetActive(false); //TODO: re-activate these when the game finishes
+        UILobby.instance.fallingCards.SetActive(false);
 
         StartCoroutine(AsyncLoadGame());
     }
@@ -265,7 +267,15 @@ public class Player : NetworkBehaviour
         Debug.Log("Telling tm to continue...");
     }
 
-    public void UnloadGame()
+    public void LeaveMatch() //When the player leaves the game
+    {
+        networkMatchChecker.matchId = System.Guid.Empty;
+        matchID = string.Empty;
+
+        TargetUnloadGame();
+    }
+
+    public void UnloadGame() //Unloads game scene but keep player in the game (when the game goes back to lobby)
     {
         TargetUnloadGame();
     }
@@ -286,25 +296,13 @@ public class Player : NetworkBehaviour
     {
         AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync("MainGame");
 
+        UILobby.instance.fallingCards.SetActive(false); //Lemme see thos sexy card particles
+
         while (!asyncUnload.isDone)
         {
             Debug.Log("Unloading scene...");
             yield return null;
         }
-    }
-
-    public void LeaveGame()
-    {
-        networkMatchChecker.matchId = System.Guid.Empty;
-        matchID = string.Empty;
-
-        TargetLeaveGame();
-    }
-
-    [TargetRpc]
-    void TargetLeaveGame()
-    {
-        StartCoroutine(AsyncUnloadGame());
     }
 
     public void OtherPlayerLeft(Player player)

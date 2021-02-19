@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using Mirror;
 using AdvacedMathStuff;
+using System.Collections;
+using System.Collections.Generic;
+using Convert;
 
 /* There is one turn manager for every game going on, it handles whose turn
  * it is and all the players in the game.
@@ -34,7 +37,6 @@ public class TurnManager : NetworkBehaviour
 
     public void GameStart() //When the game start
     {
-        //TODO: Add card to middle when game starts
         Debug.Log("The game has started!");
 
         cardNums = new SyncListInt() {
@@ -52,6 +54,10 @@ public class TurnManager : NetworkBehaviour
                 DealCard(player);
             }
         }
+
+        //Add card to middle
+        int firstCard = GetInitialCard();
+        PlaceInitialCard(firstCard);
     }
 
     public void ContinueGame()
@@ -61,6 +67,38 @@ public class TurnManager : NetworkBehaviour
             Player player = playerObj.GetComponent<Player>();
             player.UnloadGame();
         }
+    }
+
+    void PlaceInitialCard(int id)
+    {
+        Player arbitraryPlayer = players[0].GetComponent<Player>(); //Arbitrary but needed for certain values (which should be the same across all players)
+
+        Vector3 position = new Vector3(0f.GiveOrTake(0.1f), 0.01f, 1f.GiveOrTake(0.1f));
+        Quaternion rotation = Quaternion.Euler(90, 0, Random.Range(0f, 360f));
+
+        GameObject newCard = Instantiate(arbitraryPlayer.deck.cards[id], position, rotation);
+
+        if (newCard.TryGetComponent(out Collider col))
+            Destroy(col);
+
+        newCard.GetComponent<Card>().defaultPos = Vector3.zero;
+
+        newCard.GetComponent<NetworkMatchChecker>().matchId = arbitraryPlayer.matchID.ToGuid();
+        NetworkServer.Spawn(newCard.gameObject); //Spawn it on the server
+
+        discard.Insert(0, newCard);
+    }
+
+    int GetInitialCard()
+    {
+        //Alternate card chances, special cards cannot be the first card in the deck
+        List<int> weights = new List<int>() {
+        0, 0, 1, 1, 1, 1, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0,};
+
+        int card = AdvMath.Roulette(weights.ToArray());
+        cardNums[card]--;
+
+        return card;
     }
 
     public void DealCard(Player player)

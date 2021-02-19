@@ -38,7 +38,7 @@ namespace Lobby
 
         public static MatchMaker instance;
 
-        public SyncListMatch matches = new SyncListMatch(); //TODO: Remove a match if every player leaves
+        public SyncListMatch matches = new SyncListMatch();
         public SyncListString matchIDs = new SyncListString();
 
         public GameObject turnManagerPrefab;
@@ -59,7 +59,7 @@ namespace Lobby
             }
             else
             {
-                Debug.Log("Match ID already exists"); //TODO: Get another code
+                Debug.Log("Match ID already exists");
                 return false;
             }
         }
@@ -102,6 +102,7 @@ namespace Lobby
             turnManager.GameStart();
         }
 
+        //TODO: If the host leaves a match at the results screen, make the new host be able to continue the game
         public bool LeaveMatch(GameObject playerObject, TurnManager turnmanager = null) //When a player wants to leave the match
         {
             if (!playerObject.TryGetComponent(out Player player))
@@ -114,19 +115,26 @@ namespace Lobby
             {
                 turnmanager.players.RemoveAt(player.playerID);
 
-                //Reset the playerIDs
-                for (int i = 0; i < turnmanager.players.Count; i++)
-                    turnmanager.players[i].GetComponent<Player>().playerID = i;
+                if (turnmanager.players.Count != 0)
+                {
+                    //Reset the playerIDs
+                    for (int i = 0; i < turnmanager.players.Count; i++)
+                        turnmanager.players[i].GetComponent<Player>().playerID = i;
 
-                //Turn goes to the next person if they leave on their turn
-                if (turnmanager.currentPlayer == player.playerID)
-                    turnmanager.NextTurn();
+                    //Turn goes to the next person if they leave on their turn
+                    if (turnmanager.currentPlayer == player.playerID)
+                        turnmanager.NextTurn();
 
-                //We need a new host if the host leaves
-                if (player.isHost)
-                    turnmanager.players[0].GetComponent<Player>().isHost = true;
+                    //We need a new host if the host leaves
+                    if (player.isHost)
+                        turnmanager.players[0].GetComponent<Player>().isHost = true;
 
-                turnmanager.SetTurnDisplay(turnmanager.currentPlayer);
+                    turnmanager.SetTurnDisplay(turnmanager.currentPlayer);
+                }
+                else
+                {
+                    Destroy(turnmanager.gameObject);
+                }
             }
 
             match.players.Remove(playerObject);
@@ -146,7 +154,7 @@ namespace Lobby
                 matchIDs.Remove(match.matchID);
             }
 
-            player.LeaveGame();
+            player.LeaveMatch();
 
             return true;
         }

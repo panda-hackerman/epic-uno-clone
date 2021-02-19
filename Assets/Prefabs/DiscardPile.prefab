@@ -9,10 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 992383727026760625}
-  - component: {fileID: 992383727026760624}
   - component: {fileID: 992383727026760627}
   m_Layer: 0
-  m_Name: '- DiscardPile'
+  m_Name: DiscardPile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,22 +31,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &992383727026760624
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 992383727026760638}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b003bc5be0540a48a2a201918860bc0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0
-  deck: {fileID: 11400000, guid: fdfaa3d64cbac474db9cb3dbc5b2f795, type: 2}
-  maxDiscardSize: 10
 --- !u!114 &992383727026760627
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -14,7 +14,7 @@ public class GameUIPlayer : NetworkBehaviour
     public RawImage image;
     public Text text;
     public TMP_Text cardCount;
-    public Outline outline;
+    public GameObject outline;
 
     public NetworkMatchChecker networkMatchChecker;
 

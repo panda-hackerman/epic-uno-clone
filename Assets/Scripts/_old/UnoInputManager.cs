@@ -122,8 +122,6 @@ public class UnoInputManager : NetworkBehaviour
         Debug.Log("bababooey");
     }
 
-    //TODO: Have a card show up at the beginning of the game
-
     public bool canPlay;
     [Command]
     public void CmdCanPlayCard(GameObject player, int type, int cardNum, string classType)
