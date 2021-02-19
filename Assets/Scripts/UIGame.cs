@@ -98,6 +98,17 @@ public class UIGame : MonoBehaviour
 
     public void SetPlayerTurn(int playerNum)
     {
+        if (playerDisplay.childCount <= 0)
+        {
+            Debug.LogWarning("Where are the player displays? This probably shouldn't have happened. " +
+                "Generating new player displays");
+
+            foreach (GameObject gameObj in TurnManager.instance.players)
+            {
+                SpawnPlayerUIPrefab(gameObj.GetComponent<Player>());
+            }
+        }
+
         foreach (Transform child in playerDisplay)
         {
             if (child.TryGetComponent(out GameUIPlayer uiPlayer))
@@ -107,6 +118,17 @@ public class UIGame : MonoBehaviour
 
     public void SetCardCount(Player player, int count)
     {
+        if (playerDisplay.childCount <= 0)
+        {
+            Debug.LogWarning("Where are the player displays? This probably shouldn't have happened. " +
+                "Generating new player displays");
+
+            foreach (GameObject gameObj in TurnManager.instance.players)
+            {
+                SpawnPlayerUIPrefab(gameObj.GetComponent<Player>());
+            }
+        }
+
         foreach (Transform child in playerDisplay) //Loop through and find the player
         {
             GameUIPlayer uiPlayer = child.GetComponent<GameUIPlayer>();
