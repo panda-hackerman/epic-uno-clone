@@ -8,15 +8,9 @@ public class MainMenuManager : MonoBehaviour
 {
     public NetworkManager networkManager;
 
-    public void StartGame()
-    {
-        StartCoroutine(LoadScene("Offline"));
-    }
+    public void StartGame() => StartCoroutine(LoadScene("Offline"));
 
-    public void OpenCredits()
-    {
-        StartCoroutine(LoadScene("Credits"));
-    }
+    public void OpenCredits() => StartCoroutine(LoadScene("Credits"));
 
     public void OpenMainMenu()
     {
@@ -36,9 +30,5 @@ public class MainMenuManager : MonoBehaviour
         }
     }
 
-    public void QuitToDesktop()
-    {
-        Debug.Log("Closing game...");
-        Application.Quit();
-    }
+    public void QuitToDesktop() => Application.Quit();
 }

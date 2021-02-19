@@ -11,8 +11,11 @@ public class UneNetworkManager : NetworkManager
     {
         Player player = conn.identity.GetComponent<Player>();
 
-        MatchMaker.instance.LeaveMatch(player.gameObject);
-        
-        base.OnServerDisconnect(conn);
+        MatchMaker.FindMatchByID(player.matchID, out Match match);
+        TurnManager turnManager = match.turnManagerObj.GetComponent<TurnManager>();
+
+        MatchMaker.instance.LeaveMatch(player.gameObject, turnManager);
+
+        NetworkServer.DestroyPlayerForConnection(conn);
     }
 }

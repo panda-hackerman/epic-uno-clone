@@ -23,6 +23,7 @@ namespace Lobby
         public string matchID; //The 6 digit ID
 
         public SyncListGameObject players = new SyncListGameObject(); //List of all the players in this match
+        public GameObject turnManagerObj;
     }
 
     [System.Serializable]
@@ -89,6 +90,8 @@ namespace Lobby
 
             FindMatchByID(matchID, out Match match);
 
+            match.turnManagerObj = newTurnManager;
+
             foreach (GameObject playerObject in match.players) //Call this on every player
             {
                 Player player = playerObject.GetComponent<Player>();
@@ -122,6 +125,8 @@ namespace Lobby
                 //We need a new host if the host leaves
                 if (player.isHost)
                     turnmanager.players[0].GetComponent<Player>().isHost = true;
+
+                turnmanager.SetTurnDisplay(turnmanager.currentPlayer);
             }
 
             match.players.Remove(playerObject);
@@ -146,17 +151,17 @@ namespace Lobby
             return true;
         }
 
-        public bool FindMatchByID(string matchID, out Match match)
+        public static bool FindMatchByID(string matchID, out Match match)
         {
             match = null;
 
-            if (matchIDs.Contains(matchID))
+            if (instance.matchIDs.Contains(matchID))
             {
-                for (int i = 0; i < matches.Count; i++)
+                for (int i = 0; i < instance.matches.Count; i++)
                 {
-                    if (matches[i].matchID == matchID)
+                    if (instance.matches[i].matchID == matchID)
                     {
-                        match = matches[i];
+                        match = instance.matches[i];
                         return true;
                     }
                 }
