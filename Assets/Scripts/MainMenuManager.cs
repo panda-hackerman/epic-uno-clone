@@ -8,6 +8,13 @@ public class MainMenuManager : MonoBehaviour
 {
     public NetworkManager networkManager;
 
+    public GameObject settingsPanel;
+
+    public void ToggleSettings()
+    {
+        settingsPanel.SetActive(!settingsPanel.activeSelf);
+    }
+
     public void StartGame() => StartCoroutine(LoadScene("Offline"));
 
     public void OpenCredits() => StartCoroutine(LoadScene("Credits"));

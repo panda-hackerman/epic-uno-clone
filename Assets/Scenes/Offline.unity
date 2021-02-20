@@ -339,7 +339,7 @@ MonoBehaviour:
   offlineScene: Assets/Scenes/Offline.unity
   onlineScene: Assets/Scenes/MainLobby.unity
   transport: {fileID: 106995335}
-  networkAddress: 52.143.64.220
+  networkAddress: 52.247.204.124
   maxConnections: 64
   disconnectInactiveConnections: 0
   disconnectInactiveTimeout: 60
@@ -1934,7 +1934,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1557865652}
   - component: {fileID: 1557865651}
-  - component: {fileID: 1557865650}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1942,14 +1941,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1557865650
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1557865649}
-  m_Enabled: 1
 --- !u!20 &1557865651
 Camera:
   m_ObjectHideFlags: 0
@@ -2583,6 +2574,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   networkManager: {fileID: 106995334}
+  settingsPanel: {fileID: 0}
 --- !u!4 &2024154796
 Transform:
   m_ObjectHideFlags: 0
