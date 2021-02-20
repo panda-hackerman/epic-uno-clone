@@ -31,8 +31,6 @@ public class SettingsManager : MonoBehaviour
             {
                 currentResolutionIndex = i;
             }
-
-            Debug.Log($"Added resolution: {option}");
         }
 
         resolutionDropdown.AddOptions(options);
