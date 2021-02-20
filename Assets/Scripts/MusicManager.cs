@@ -16,6 +16,8 @@ public class MusicManager : MonoBehaviour
 
     private void Awake()
     {
+        mixer.SetFloat("MasterVolume", -27);
+
         audioSource.Play();
 
         if (instance != null && instance != this)
@@ -30,6 +32,11 @@ public class MusicManager : MonoBehaviour
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     public void SetAudioLevel(float value, string name)

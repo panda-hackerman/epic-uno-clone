@@ -2,31 +2,50 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class SettingsManager : MonoBehaviour
 {
     public Dropdown resolutionDropdown;
+    public Toggle fullscreenToggle;
 
     Resolution[] resolutions;
 
-    private void Start()
+    private void OnEnable()
     {
         resolutions = Screen.resolutions;
 
-        if (resolutionDropdown)
+        resolutionDropdown.ClearOptions();
+
+        List<string> options = new List<string>();
+
+        int currentResolutionIndex = 0;
+
+        for (int i = 0; i < resolutions.Length; i++)
         {
-            resolutionDropdown.ClearOptions();
+            string option = $"{resolutions[i].width}x{resolutions[i].height} at {resolutions[i].refreshRate}Hz";
+            options.Add(option);
 
-            List<string> options = new List<string>();
-
-            for (int i = 0; i < resolutions.Length; i++)
+            if (resolutions[i].width == Screen.currentResolution.width &&
+                resolutions[i].width == Screen.currentResolution.height)
             {
-                string option = $"{resolutions[i].width}x{resolutions[i].height}";
-                options.Add(option);
+                currentResolutionIndex = i;
             }
 
-            resolutionDropdown.AddOptions(options);
+            Debug.Log($"Added resolution: {option}");
         }
+
+        resolutionDropdown.AddOptions(options);
+        resolutionDropdown.value = currentResolutionIndex;
+        resolutionDropdown.RefreshShownValue();
+
+        fullscreenToggle.SetIsOnWithoutNotify(Screen.fullScreen);
+    }
+
+    public void SetResolution(int index)
+    {
+        Resolution res = resolutions[index];
+        Screen.SetResolution(res.width, res.height, Screen.fullScreen);
     }
 
     public void SetMusicVolume(float value)
