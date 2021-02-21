@@ -51,8 +51,9 @@ public class UIGame : MonoBehaviour
     public Transform playerDisplay;
     public GameObject chooseColorButtons;
 
+    public bool localPause { get { return pauseMenu.activeSelf; } }
     public GameObject pauseMenu;
-    [HideInInspector] public bool pauseMenuOpen = false;
+    public GameObject settingsMenu;
 
     [Header("Win state panel stuff")]
     public GameObject winStatePanel;
@@ -185,21 +186,18 @@ public class UIGame : MonoBehaviour
         }
     }
 
-    public void TogglePause()
+    public void PressedEsc()
     {
-        if (pauseMenuOpen) ClosePause();
-        else OpenPause();
-    }
-
-    public void OpenPause()
-    {
-        pauseMenu.SetActive(true);
-        pauseMenuOpen = true;
-    }
-
-    public void ClosePause()
-    {
-        pauseMenu.SetActive(false);
-        pauseMenuOpen = false;
+        if (!pauseMenu.activeSelf) //Paused menu closed
+        {
+            pauseMenu.SetActive(true);
+        }
+        else //Pause menu open
+        {
+            if (settingsMenu.activeSelf) //Close settings before the pause menu
+                settingsMenu.SetActive(false);
+            else
+                pauseMenu.SetActive(false);
+        }
     }
 }

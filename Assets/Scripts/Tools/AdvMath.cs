@@ -27,6 +27,52 @@ namespace AdvacedMathStuff
             }
         }
 
+        public static T[] ShuffleArray<T>(this T[] inputArray)
+        {
+            int count = inputArray.Length;
+            int last = count - 1;
+
+            T[] outputArray = new T[count];
+            inputArray.CopyTo(outputArray, 0);
+
+            if (count < 2) //If the value is 1 or 0, the list won't change anyway
+                return outputArray;
+
+            for (int i = 0; i < last; ++i)
+            {
+                int r = Random.Range(i, count);
+                T temp = inputArray[i];
+
+                outputArray[i] = outputArray[r];
+                outputArray[r] = temp;
+            }
+
+            return outputArray;
+        }
+
+        public static List<T> ShuffleList<T>(this List<T> inputList)
+        {
+            int count = inputList.Count;
+            int last = count - 1;
+
+            T[] outputArray = new T[count];
+            inputList.CopyTo(outputArray, 0);
+
+            if (count < 2)
+                return new List<T>(outputArray);
+
+            for (int i = 0; i < last; ++i)
+            {
+                int r = Random.Range(i, count);
+                T temp = inputList[i];
+
+                outputArray[i] = outputArray[r];
+                outputArray[r] = temp;
+            }
+
+            return new List<T>(outputArray);
+        }
+
         #region Roulette
         //Random with weighted probability, using an Array of doubles
         /*Usage: int prefabNum = Roulette(weights)

@@ -8002,7 +8002,7 @@ GameObject:
   - component: {fileID: 324193971}
   - component: {fileID: 324193970}
   m_Layer: 5
-  m_Name: SettingsButton
+  m_Name: OpenSettingsButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8453,7 +8453,7 @@ GameObject:
   - component: {fileID: 337978256}
   - component: {fileID: 337978257}
   m_Layer: 5
-  m_Name: Music Volume Slider
+  m_Name: Effects Volume Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9079,7 +9079,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resolutionDropdown: {fileID: 377369951}
+  qualityDropdown: {fileID: 1040048333}
   fullscreenToggle: {fileID: 194084905}
+  musicVolSlider: {fileID: 909294045}
+  effectsVolSlider: {fileID: 337978257}
 --- !u!1 &351871637
 GameObject:
   m_ObjectHideFlags: 0

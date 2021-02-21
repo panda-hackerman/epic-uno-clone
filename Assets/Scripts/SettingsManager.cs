@@ -7,15 +7,41 @@ using System.Linq;
 public class SettingsManager : MonoBehaviour
 {
     public Dropdown resolutionDropdown;
+    public Dropdown qualityDropdown;
     public Toggle fullscreenToggle;
+
+    public Slider musicVolSlider;
+    public Slider effectsVolSlider;
 
     Resolution[] resolutions;
 
-    private void OnEnable()
+    private void Awake()
     {
-        resolutions = Screen.resolutions;
+        //Get saved values
+        if (PlayerPrefs.HasKey("MusicVolume"))
+            SetMusicVolume(PlayerPrefs.GetFloat("MusicVolume"));
 
+        if (PlayerPrefs.HasKey("EffectsVolume"))
+            SetEffectsVolume(PlayerPrefs.GetFloat("EffectsVolume"));
+
+        //Update the settings visuals
+        SetResDropdownOptions();
+
+        float musicVolume = MusicManager.instance.GetAudioLevel("MusicVolume");
+        float effectsVolume = MusicManager.instance.GetAudioLevel("EffectsVolume");
+
+        musicVolSlider.SetValueWithoutNotify(musicVolume);
+        effectsVolSlider.SetValueWithoutNotify(effectsVolume);
+
+        qualityDropdown.SetValueWithoutNotify(QualitySettings.GetQualityLevel());
+        fullscreenToggle.SetIsOnWithoutNotify(Screen.fullScreen);
+    }
+
+    public void SetResDropdownOptions()
+    {
         resolutionDropdown.ClearOptions();
+
+        resolutions = Screen.resolutions;
 
         List<string> options = new List<string>();
 
@@ -34,10 +60,8 @@ public class SettingsManager : MonoBehaviour
         }
 
         resolutionDropdown.AddOptions(options);
-        resolutionDropdown.value = currentResolutionIndex;
+        resolutionDropdown.SetValueWithoutNotify(currentResolutionIndex);
         resolutionDropdown.RefreshShownValue();
-
-        fullscreenToggle.SetIsOnWithoutNotify(Screen.fullScreen);
     }
 
     public void SetResolution(int index)
@@ -49,11 +73,13 @@ public class SettingsManager : MonoBehaviour
     public void SetMusicVolume(float value)
     {
         MusicManager.instance.SetAudioLevel(value, "MusicVolume");
+        PlayerPrefs.SetFloat("MusicVolume", value);
     }
 
     public void SetEffectsVolume(float value)
     {
         MusicManager.instance.SetAudioLevel(value, "EffectsVolume");
+        PlayerPrefs.SetFloat("EffectsVolume", value);
     }
 
     public void SetQuality(int index)
