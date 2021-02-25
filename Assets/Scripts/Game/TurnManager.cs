@@ -37,7 +37,7 @@ public class TurnManager : NetworkBehaviour
 
     public void GameStart() //When the game start
     {
-        Debug.Log("The game has started!");
+        Debug.Log($"TurnManager: Game started | {players[0].GetComponent<Player>().matchID}");
 
         cardNums = new SyncListInt() {
         4, 4, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 };
@@ -124,7 +124,7 @@ public class TurnManager : NetworkBehaviour
         else if (currentPlayer > upperBound)
             currentPlayer = 0;
 
-        Debug.Log($"It is now Player {currentPlayer}'s turn");
+        Debug.Log($"It is now Player {currentPlayer}'s turn | {players[0].GetComponent<Player>().matchID}");
 
         SetTurnDisplay(currentPlayer);
 
@@ -214,6 +214,16 @@ public class TurnManager : NetworkBehaviour
                 Player targetPlayer = targetObj.GetComponent<Player>();
                 mainPlayer.TargetSetCardCount(targetObj, targetPlayer.cardCount);
             }
+        }
+    }
+
+    public void UpdateHostDisplay()
+    {
+        foreach (GameObject playerObj in players)
+        {
+            NetworkingInterface player = playerObj.GetComponent<NetworkingInterface>();
+
+            player.TargetSetHost(); //TODO: Store host in match class?
         }
     }
 

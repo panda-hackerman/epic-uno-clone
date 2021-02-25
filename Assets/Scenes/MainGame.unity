@@ -725,7 +725,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00018310547, y: 52.259766}
+  m_AnchoredPosition: {x: -0.00024414062, y: 52.259766}
   m_SizeDelta: {x: -0.91625977, y: -104.52545}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &177504682
@@ -1176,12 +1176,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arrow:
     gameObject: {fileID: 1198404555}
-  gameUIPlayerPrefab: {fileID: 3432294693271273177, guid: 459e03ed371f188488c16c2f00ccde83, type: 3}
+  gameUIPlayerPrefab: {fileID: 4414045069110082074, guid: 479e6a7727ce8164db94483291e93edb, type: 3}
   gameUiPlayerParent: {fileID: 144371359}
   playerDisplay: {fileID: 144371359}
   chooseColorButtons: {fileID: 309833221}
   pauseMenu: {fileID: 218274363}
-  settingsMenu: {fileID: 0}
+  settingsMenu: {fileID: 811667260}
   winStatePanel: {fileID: 36954373}
   playerWonText: {fileID: 2069495894}
   waitingForHostText: {fileID: 851399921}
@@ -2026,7 +2026,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00018310547, y: -52.079956}
+  m_AnchoredPosition: {x: -0.00024414062, y: -52.079956}
   m_SizeDelta: {x: -0.19891357, y: -105.29474}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &533972464
@@ -3720,7 +3720,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -274.60995, y: 176.9502}
+  m_AnchoredPosition: {x: -274.61, y: 176.9502}
   m_SizeDelta: {x: -549.2122, y: -215.57793}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &913386646
@@ -4055,7 +4055,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00012207031, y: -9.956055}
+  m_AnchoredPosition: {x: 0, y: -9.956055}
   m_SizeDelta: {x: 0.00030517578, y: -190.39813}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1026835760
@@ -4595,7 +4595,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00012207031, y: 94.79199}
+  m_AnchoredPosition: {x: 0, y: 94.79199}
   m_SizeDelta: {x: 0.00030517578, y: -189.5846}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1103823867
@@ -4946,7 +4946,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0.45837402, y: -278}
+  m_AnchoredPosition: {x: 0.4584961, y: -278}
   m_SizeDelta: {x: -359.28265, y: 199.23071}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1151717815
@@ -5679,7 +5679,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -275.05997, y: 134.00977}
+  m_AnchoredPosition: {x: -275.05994, y: 134.00977}
   m_SizeDelta: {x: -550.12885, y: -129.70525}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1326930389
@@ -8125,7 +8125,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 2.4517e-41, z: 0, w: -2}
+  m_BoundingSphereOverride: {x: 4.34e-43, y: 2.28e-43, z: 0, w: 12.178673}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0

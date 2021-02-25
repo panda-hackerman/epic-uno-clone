@@ -62,8 +62,6 @@ public class Player : NetworkBehaviour
 
     public void Init() //When the host starts the game
     {
-        Debug.Log("Init !!!", this);
-
         BroadcastMessage("OnInit");
 
         UIGame.instance.StartGameSuccess();
@@ -117,7 +115,6 @@ public class Player : NetworkBehaviour
     {
         cardCount = value;
         TurnManager.instance.UpdateCardCount();
-        Debug.Log($"CardCount is now {value}!");
 
         //Declare le winner
         if (value <= 0) //This means this player has won; <= not == just incase I guess
@@ -208,7 +205,7 @@ public class Player : NetworkBehaviour
     void CmdBeginGame() //Start the game on the server
     {
         MatchMaker.instance.BeginGame(matchID);
-        Debug.Log("Beginning game");
+        Debug.Log($"Player: Beginning game | {matchID}");
     }
 
     public void StartGame()
@@ -232,9 +229,10 @@ public class Player : NetworkBehaviour
         //Additively load game scene; meaning load it ontop of the lobby scene
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("MainGame", LoadSceneMode.Additive);
 
+        Debug.Log("Loading main game scene...");
+
         while (!asyncLoad.isDone)
         {
-            Debug.Log("Loading scene...");
             yield return null;
         }
 
@@ -242,6 +240,8 @@ public class Player : NetworkBehaviour
         SceneManager.MoveGameObjectToScene(TurnManager.instance.gameObject, SceneManager.GetSceneByName("MainGame"));
 
         localPlayer.Init();
+
+        Debug.Log("Loaded main game scene");
     }
 
     #endregion
@@ -264,7 +264,7 @@ public class Player : NetworkBehaviour
     public void CmdContinueGame()
     {
         TurnManager.instance.ContinueGame();
-        Debug.Log("Telling tm to continue...");
+        Debug.Log("Telling turn manager to continue...");
     }
 
     public void LeaveMatch() //When the player leaves the game
@@ -300,7 +300,6 @@ public class Player : NetworkBehaviour
 
         while (!asyncUnload.isDone)
         {
-            Debug.Log("Unloading scene...");
             yield return null;
         }
     }

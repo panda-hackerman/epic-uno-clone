@@ -56,9 +56,9 @@ public class CardHand : MonoBehaviour
                 Debug.Log($"Uh oh, that isn't a card! {transform.name} doesn't have a Card script.", transform);
                 transform.SetParent(null); //Get outta here!
                 continue;
-            }
+            } //Check for card script
 
-            float t = (index + 0.5f) / cardNumber;
+            float t = (index + 0.5f) / cardNumber; //Position in the curve
 
             Vector3 position = AdvMath.Bezier(t, p0.position, p1.position, p2.position);
             float rotation = 0;

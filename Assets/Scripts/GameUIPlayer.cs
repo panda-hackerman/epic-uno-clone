@@ -15,6 +15,7 @@ public class GameUIPlayer : NetworkBehaviour
     public Text text;
     public TMP_Text cardCount;
     public GameObject outline;
+    public Image crown;
 
     public NetworkMatchChecker networkMatchChecker;
 
@@ -45,6 +46,7 @@ public class GameUIPlayer : NetworkBehaviour
     [TargetRpc]
     public void TargetUpdatePlayerInfo(Transform uiPlayer, int position)
     {
+        Debug.Log("Updating player info...");
         GameUIPlayer gameUIPlayer = uiPlayer.GetComponent<GameUIPlayer>();
 
         uiPlayer.SetSiblingIndex(position);
@@ -52,5 +54,10 @@ public class GameUIPlayer : NetworkBehaviour
         gameUIPlayer.text.text = gameUIPlayer.player.username;
         gameUIPlayer.image.texture = gameUIPlayer.player.iconData.ToTexture();
         gameUIPlayer.cardCount.text = gameUIPlayer.player.cardCount.ToString();
+        gameUIPlayer.crown.enabled = gameUIPlayer.player.isHost;
+
+        Debug.Log("Updated player info!" +
+            $"Player '{gameUIPlayer.player.name}' has {gameUIPlayer.cardCount} cards, and" +
+            $"{(gameUIPlayer.player.isHost ? "is": "is not")} the host", gameUIPlayer);
     }
 }

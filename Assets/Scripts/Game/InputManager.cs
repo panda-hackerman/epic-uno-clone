@@ -60,7 +60,6 @@ public class InputManager : NetworkBehaviour
 
     public void OnInit() //Runs when the match starts
     {
-        Debug.Log("Hello");
         cam = GameObject.FindGameObjectWithTag("GameCamera").GetComponent<Camera>();
 
         getSelection = TurnManager.instance.currentPlayer == player.playerID;

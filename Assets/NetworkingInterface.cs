@@ -81,6 +81,12 @@ public class NetworkingInterface : NetworkBehaviour
         UIGame.instance.SetCardCount(player.GetComponent<Player>(), count);
     }
 
+    [TargetRpc]
+    public void TargetSetHost()
+    {
+        UIGame.instance.SetPlayerHost();
+    }
+
     [Command]
     private void CmdLeaveMatch(GameObject player, GameObject turnmanager)
     {

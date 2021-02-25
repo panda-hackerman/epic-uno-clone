@@ -97,18 +97,20 @@ public class UIGame : MonoBehaviour
 
     }
 
+    public void SetPlayerHost()
+    {
+        CheckDisplayExists();
+
+        foreach (Transform child in playerDisplay)
+        {
+            if (child.TryGetComponent(out GameUIPlayer uiPlayer))
+                uiPlayer.crown.enabled = uiPlayer.player.isHost;
+        }
+    }
+
     public void SetPlayerTurn(int playerNum)
     {
-        if (playerDisplay.childCount <= 0)
-        {
-            Debug.LogWarning("Where are the player displays? This probably shouldn't have happened. " +
-                "Generating new player displays");
-
-            foreach (GameObject gameObj in TurnManager.instance.players)
-            {
-                SpawnPlayerUIPrefab(gameObj.GetComponent<Player>());
-            }
-        }
+        CheckDisplayExists();
 
         foreach (Transform child in playerDisplay)
         {
@@ -119,16 +121,7 @@ public class UIGame : MonoBehaviour
 
     public void SetCardCount(Player player, int count)
     {
-        if (playerDisplay.childCount <= 0)
-        {
-            Debug.LogWarning("Where are the player displays? This probably shouldn't have happened. " +
-                "Generating new player displays");
-
-            foreach (GameObject gameObj in TurnManager.instance.players)
-            {
-                SpawnPlayerUIPrefab(gameObj.GetComponent<Player>());
-            }
-        }
+        CheckDisplayExists();
 
         foreach (Transform child in playerDisplay) //Loop through and find the player
         {
@@ -139,6 +132,24 @@ public class UIGame : MonoBehaviour
                 break;
             }
         }
+    }
+
+    public bool CheckDisplayExists() //Precautionary, had bug with player displays disapearing before (this fixed it, i think??)
+    {
+        if (playerDisplay.childCount <= 0)
+        {
+            Debug.LogWarning("Where are the player displays? This probably shouldn't have happened. " +
+                "Generating new player displays");
+
+            foreach (GameObject gameObj in TurnManager.instance.players)
+            {
+                SpawnPlayerUIPrefab(gameObj.GetComponent<Player>());
+            }
+
+            return false;
+        }
+
+        return true;
     }
 
     public void StartGameSuccess() //Player calls this method locally when the game finishes loading
