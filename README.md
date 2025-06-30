@@ -60,7 +60,7 @@ A few known issues exist, but they're largely non-gamebreaking. These, in all li
 
 Lead Programmers:
 - Eli Michaud ([GitHub](https://github.com/panda-hackerman) | [Portfolio](https://michaud.dev/))
-- Fabian Hernandez-Angel ([GitHub](https://github.com/SomeGreenDude))
+- Fabian Hernandez-Angel ([GitHub](https://github.com/SomeGreenDude) | [itch.io](https://greenz114.itch.io/))
 
 Music:
 [Audionautix.com](https://audionautix.com/)
